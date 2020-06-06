@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="打包工具ios转格式区分alpha通道无效，转RGB（新老工具都转）  打包工具整理检查alpha通道无效的代码  老打包工具的bug整理代码  写nsight使用记录，如何看shader问题  每日测试子模块的单元测试完善  每日测试单元测试出现网络验证失败  添加默认操作步骤  录制后自动运行一次  自动运行使用指示鼠标位置模式（？）  报错的单元测试，继续report表示通过">
+<meta name="keywords" content="记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20190909记录">
+<meta property="og:url" content="http://plainliu.github.io/2019/10/21/20191021记录/index.html">
+<meta property="og:site_name" content="时习">
+<meta property="og:description" content="打包工具ios转格式区分alpha通道无效，转RGB（新老工具都转）  打包工具整理检查alpha通道无效的代码  老打包工具的bug整理代码  写nsight使用记录，如何看shader问题  每日测试子模块的单元测试完善  每日测试单元测试出现网络验证失败  添加默认操作步骤  录制后自动运行一次  自动运行使用指示鼠标位置模式（？）  报错的单元测试，继续report表示通过">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571651619063.png">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571820295943.png">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571820500012.png">
+<meta property="og:updated_time" content="2019-10-28T05:43:47.473Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="20190909记录">
+<meta name="twitter:description" content="打包工具ios转格式区分alpha通道无效，转RGB（新老工具都转）  打包工具整理检查alpha通道无效的代码  老打包工具的bug整理代码  写nsight使用记录，如何看shader问题  每日测试子模块的单元测试完善  每日测试单元测试出现网络验证失败  添加默认操作步骤  录制后自动运行一次  自动运行使用指示鼠标位置模式（？）  报错的单元测试，继续report表示通过">
+<meta name="twitter:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571651619063.png">
+  <link rel="canonical" href="http://plainliu.github.io/2019/10/21/20191021记录/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>20190909记录 | 时习</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">时习</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">欲慎其终者，先追其远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://plainliu.github.io/2019/10/21/20191021记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木可">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="时习">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">20190909记录
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-21 10:43:00" itemprop="dateCreated datePublished" datetime="2019-10-21T10:43:00+08:00">2019-10-21</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-28 13:43:47" itemprop="dateModified" datetime="2019-10-28T13:43:47+08:00">2019-10-28</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><input checked disabled type="checkbox"> 打包工具ios转格式区分alpha通道无效，转RGB（新老工具都转）</li>
+<li><input disabled type="checkbox"> 打包工具整理检查alpha通道无效的代码</li>
+<li><input disabled type="checkbox"> 老打包工具的bug整理代码</li>
+<li><input disabled type="checkbox"> 写nsight使用记录，如何看shader问题</li>
+<li><input disabled type="checkbox"> 每日测试子模块的单元测试完善</li>
+<li><input disabled type="checkbox"> 每日测试单元测试出现网络验证失败</li>
+<li><input checked disabled type="checkbox"> 添加默认操作步骤</li>
+<li><input checked disabled type="checkbox"> 录制后自动运行一次</li>
+<li><input disabled type="checkbox"> 自动运行使用指示鼠标位置模式（？）</li>
+<li><input disabled type="checkbox"> 报错的单元测试，继续report表示通过</li>
+</ul><a id="more"></a>
+<h1 id="1021"><a href="#1021" class="headerlink" title="1021"></a>1021</h1><p>提交闪黑片问题</p>
+<h2 id="添加录制后运行"><a href="#添加录制后运行" class="headerlink" title="添加录制后运行"></a>添加录制后运行</h2><p>主进程管理录制和回放</p>
+<p>子进程两个：录制、回放</p>
+<p>子模块提供录制功能，录制的子进程使用录制子模块</p>
+<p>两个控制接口：</p>
+<ul>
+<li>是否连续录制</li>
+<li>是否需要自动测试</li>
+</ul>
+<h2 id="录制报错"><a href="#录制报错" class="headerlink" title="录制报错"></a>录制报错</h2><ol>
+<li><p>修改modulecommon.lua</p>
+<p>只允许有效一次</p>
+</li>
+<li><p>对于实际需要的工作路径（手动跑例子的引擎位置）不在入口lua文件所在的地址，加载资源有问题，如何处理</p>
+<ul>
+<li><p>修改例子，在外层添加一个入口文件</p>
+</li>
+<li><p>修改工具，指定到WT文件夹的下一级目录</p>
+<p>这个的问题是有个别例子的工作路径不是外层文件夹，比如<code>14520-添加光束功能</code></p>
+<p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571651619063.png" alt="1571651619063"></p>
+<p>工作路径在内层</p>
+</li>
+</ul>
+</li>
+<li><p>讨论添加默认操作步骤</p>
+<ul>
+<li><p>添加的必要性（扩充当前的测试用例）</p>
+</li>
+<li><p>对QA的影响</p>
+<p>不测试的例子需要加到屏蔽列表里</p>
+</li>
+<li><p>默认的操作步骤主要考虑的是有只打印log的例子，就可以不录制了</p>
+</li>
+<li><p>对于没有及时录制的，可以提前加入测试队列</p>
+</li>
+<li><p>如果加默认操作步骤，怎样的步骤好一点？需不需要截图，什么时间截图</p>
+</li>
+</ul>
+</li>
+<li></li>
+</ol>
+<ul>
+<li><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2></li>
+</ul>
+<p>重构和模块化：</p>
+<p>模块化减少了冗余代码，显示出保障的重要性，因为一个功能使用到已有的模块，对已有模块的修改</p>
+<p>偶尔是有负面状态的，只是不善言谈罢了，不是没有思想。</p>
+<p>再怎么我们是技术人员，外围倒显得更专业了，指点指点，感觉优异。不敬畏规则，当做谈资。越职决策。</p>
+<p>社会青年罢。加班游戏，外带声音。</p>
+<p>我做不到如此，羡慕能如此不畏空言，却也排斥如此自作人才。</p>
+<p>时刻谨记，勿以为不显，实则都在台上。功夫不到家呀。</p>
+<p>几件事吧，告之之事，不出二日，大多人已知；他人加班，出声游戏；喜指点他人。</p>
+<h1 id="1022"><a href="#1022" class="headerlink" title="1022"></a>1022</h1><p>默认操作步骤的添加</p>
+<p>报告那些没有录制</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ul>
+<li><input checked disabled type="checkbox"> 不稳定打印，打印时间等（改例子）<ul>
+<li>1-loader测试/loading2</li>
+<li>12524-卡通渲染功能开发/code</li>
+<li>14948-修改parent后关闭引擎时发生崩溃</li>
+</ul>
+</li>
+<li><input checked disabled type="checkbox"> 异步加载，不稳定例子（加屏蔽）<ul>
+<li>13094-寻路问题/code</li>
+<li><strong>14040-整合卡通渲染功能/code</strong></li>
+<li><strong>14458-指数型高度雾/code</strong></li>
+<li><strong>15050-优化Mesh的内存占用/code</strong></li>
+</ul>
+</li>
+<li><input checked disabled type="checkbox"> rdsetting等文件不用测试（加屏蔽）<ul>
+<li>sceneRDSetting.lua</li>
+<li>cameraControl.lua</li>
+</ul>
+</li>
+<li><input disabled type="checkbox"> 有问题的例子<ul>
+<li>12524-卡通渲染功能开发/code（openGL报错）</li>
+</ul>
+</li>
+<li><input disabled type="checkbox"> 与场景同名的lua文件（不必测试）</li>
+<li><input disabled type="checkbox"> 生成的目录结构（调整生成文件夹，没有树，一个WT下多个code文件夹则只有一个）</li>
+<li><input disabled type="checkbox"> 没有操作步骤换成打印，不要生成error，最后在error中不需要算到出错例子，因为数量太多，影响查看问题例子</li>
+</ul>
+<p><strong>恢复每日测试流程</strong></p>
+<h2 id="资源检查工具-检查特效"><a href="#资源检查工具-检查特效" class="headerlink" title="资源检查工具-检查特效"></a>资源检查工具-检查特效</h2><ul>
+<li><input checked disabled type="checkbox"> 检查单元测试全通过</li>
+</ul>
+<h3 id="添加特效粒子数的统计"><a href="#添加特效粒子数的统计" class="headerlink" title="添加特效粒子数的统计"></a>添加特效粒子数的统计</h3><p>每秒所有发射器发射的粒子数</p>
+<h3 id="区分发射模型的特效"><a href="#区分发射模型的特效" class="headerlink" title="区分发射模型的特效"></a>区分发射模型的特效</h3><h3 id="打印自定义特效"><a href="#打印自定义特效" class="headerlink" title="打印自定义特效"></a>打印自定义特效</h3><p>添加新的分类</p>
+<p>打印不合法/自定义特效</p>
+<h3 id="自定义特效转换"><a href="#自定义特效转换" class="headerlink" title="自定义特效转换"></a>自定义特效转换</h3><ol>
+<li>自定义可以加man</li>
+<li>tag文件</li>
+<li>溶解特效做法不一样</li>
+</ol>
+<h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><p>模块单元测试的网络验证出问题，则不copylib，从16上拷贝当天的引擎</p>
+<ul>
+<li>保证和引擎功能同步</li>
+<li>防止验证失败的问题发生</li>
+</ul>
+<p>备注：</p>
+<p>看对比结果、跑单元测试看Resource_Checker和</p>
+<h1 id="1023"><a href="#1023" class="headerlink" title="1023"></a>1023</h1><p>添加默认的操作步骤，扩充测试用例，测试两次，处理部分问题例子</p>
+<p>资源检查工具，添加特效粒子数标准；自定义特效的检查</p>
+<p>接下来</p>
+<ul>
+<li><input disabled type="checkbox"> <p>整理测试结果、修改测试工具，再次测试</p>
+</li>
+<li><input checked disabled type="checkbox"> <p>整理资源检查工具，修改讨论结果（粒子数放到最前面，添加两个标准）</p>
+</li>
+<li><input checked disabled type="checkbox"> <p>自定义特效转换脚本</p>
+</li>
+<li><input checked disabled type="checkbox"> <p>BCP花片问题验证</p>
+</li>
+<li><input checked disabled type="checkbox"> <p>打包的自动化添加lib库的文件夹</p>
+</li>
+<li><input disabled type="checkbox"> <p>几个编辑器拷贝postlua的删除</p>
+</li>
+<li><input disabled type="checkbox"> <p>资源检查工具的config不太好，子模块于大模块不独立，config去设置子模块参数而不是定义子模块参数</p>
+</li>
+</ul>
+<h2 id="jre和jdk环境变量设置"><a href="#jre和jdk环境变量设置" class="headerlink" title="jre和jdk环境变量设置"></a>jre和jdk环境变量设置</h2><p>原来的1.8</p>
+<p>javahome：1.8的jdk文件夹：C:\Program Files\Java\jdk1.8.0_121</p>
+<p>path：%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin</p>
+<p>calsspath：%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;</p>
+<p>改成1.7 32位</p>
+<p>javahome：C:\Program Files (x86)\Java\jdk1.7.0_67</p>
+<p>path：%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;</p>
+<p>calsspath：.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar;</p>
+<h2 id="测试-2"><a href="#测试-2" class="headerlink" title="测试"></a>测试</h2><p><strong>getPathName</strong>的问题</p>
+<p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571820295943.png" alt="1571820295943"></p>
+<p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1571820500012.png" alt="1571820500012"></p>
+<p>检查录制的保存问题</p>
+<p>使用的是true</p>
+<ul>
+<li>使sampleTest单元测试通过<ul>
+<li>先修改AutoCapture引起的改动</li>
+<li>添加单元测试</li>
+<li>添加本次修改测试</li>
+</ul>
+</li>
+</ul>
+<p>测试UnitTest没了的原因</p>
+<p><strong>有报错</strong></p>
+<h2 id="转换自定义特效"><a href="#转换自定义特效" class="headerlink" title="转换自定义特效"></a>转换自定义特效</h2><p>写脚本转换</p>
+<p>记录问题：</p>
+<p>输入：项目路径；项目路径和检查的特效list</p>
+<p>输出：转换特效</p>
+<p>过程：</p>
+<p>虽然很多时候代码逻辑和效率能同时提升，难受的是有时逻辑和效率不可兼得。</p>
+<h1 id="1024"><a href="#1024" class="headerlink" title="1024"></a>1024</h1><ul>
+<li><input checked disabled type="checkbox"> 自动化打包添加Android工程拷贝</li>
+<li><input disabled type="checkbox"> 检查今天的自动化结果</li>
+<li><input disabled type="checkbox"> 尝试解决系统弹窗的问题</li>
+</ul>
+<h2 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h2><p>问题：</p>
+<p>出现系统面板（如颜色面板）后，等不到回应，阻塞状态。</p>
+<p>老的测试没有问题是因为杀死了</p>
+<p>看看能不能改sample 改成直接给值 或者录制的时候不要打开选颜色</p>
+<h2 id="自定义特效转换-1"><a href="#自定义特效转换-1" class="headerlink" title="自定义特效转换"></a>自定义特效转换</h2><p>自定义特效分类：</p>
+<ol>
+<li><p>自定义点光特效</p>
+<p>自定义代码中可获得的参数</p>
+<ul>
+<li>light 判断是否是点光特效</li>
+<li>power</li>
+</ul>
+</li>
+<li><p>自定义地表特效</p>
+<ul>
+<li>terrain</li>
+<li>texture</li>
+<li>material：material</li>
+</ul>
+<p>溶解：</p>
+<ul>
+<li>isdissolve</li>
+<li>resdissolve</li>
+<li>dissolvesize</li>
+<li>dissolvecolor1</li>
+<li>dissolvecolor2</li>
+</ul>
+</li>
+<li><p>自定义模型特效</p>
+<ul>
+<li>mesh：resMesh</li>
+<li>skl：resSkeleton</li>
+<li>san/man：resAnimation</li>
+<li>loop：resAnimationLoop</li>
+</ul>
+<p>溶解：</p>
+</li>
+</ol>
+<ul>
+<li>tag<ul>
+<li>tag取消</li>
+</ul>
+</li>
+</ul>
+<p>问题记录：</p>
+<ol>
+<li>自定义代码中有写resMaterial的属于哪一种</li>
+<li>是自定义特效，有material属性的情况下，是否为优先使用material属性，再从自定义代码中赋予溶解特性</li>
+<li>emitter.pfxType变成普通特效：_Particle.</li>
+<li>材质另存为起名字</li>
+<li>溶解特效如何区分地表和模型</li>
+</ol>
+<p>测试资源：</p>
+<ul>
+<li><p>普通特效</p>
+<p>普通地表1</p>
+<p>普通模型</p>
+</li>
+<li><p>自定义点光特效</p>
+</li>
+<li><p>自定义地表特效</p>
+<ul>
+<li><p>图片</p>
+<p>溶解/不溶解</p>
+</li>
+<li><p>材质</p>
+<p>溶解/不溶解</p>
+</li>
+</ul>
+</li>
+<li><p>自定义模型特效</p>
+<ul>
+<li>msh/skn</li>
+<li>man/san</li>
+<li>skl</li>
+<li>tag</li>
+</ul>
+<p>s</p>
+<ul>
+<li>溶解/不溶解</li>
+</ul>
+</li>
+</ul>
+<h1 id="1025"><a href="#1025" class="headerlink" title="1025"></a>1025</h1><ul>
+<li><input disabled type="checkbox"> 处理自动化结果</li>
+<li><input disabled type="checkbox"> 测试转换自定义特效的脚本</li>
+</ul>
+<p>自动化：</p>
+<p>14948<a href="http://fancy3d.wt.fancyguo.com/task/show/15475" target="_blank" rel="noopener">http://fancy3d.wt.fancyguo.com/task/show/15475</a></p>
+<p>测试转换脚本：</p>
+<p>自定义特效使用已有材质，，修改特效上的材质属性，保存特效时是否保存材质属性、是否修改原来的材质文件</p>
+<p>生成log：</p>
+<p>恢复环境：</p>
+<ol>
+<li>delpath</li>
+<li>重置currentFolder</li>
+<li>重置打印函数等</li>
+</ol>
+<h1 id="1026"><a href="#1026" class="headerlink" title="1026"></a>1026</h1><h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h2><h3 id="目前情况"><a href="#目前情况" class="headerlink" title="目前情况"></a>目前情况</h3><p><strong>检查代码</strong>：</p>
+<p>没有问题</p>
+<p><strong>检查模块单元测试</strong>：</p>
+<p>如果有报错，报告结果不准确</p>
+<p><strong>检查sampleWT</strong>：</p>
+<p>问题：</p>
+<ol>
+<li>不稳定例子</li>
+<li>有系统弹窗测试被阻塞</li>
+</ol>
+<p>检查资源：</p>
+<ol>
+<li>每天的结果中有error.txt有无的问题</li>
+</ol>
+<h3 id="待完成"><a href="#待完成" class="headerlink" title="待完成"></a>待完成</h3><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>屏蔽老例子测试工具</p>
+<p>转换材质的问题</p>
+<h2 id="Nsight使用"><a href="#Nsight使用" class="headerlink" title="Nsight使用"></a>Nsight使用</h2><p>待办：</p>
+<p>看保险配置</p>
+<p>转换资金方案</p>
+<p>是否去天津</p>
+<p>卖掉鹤姑！！！趁着还值钱，换相机！！！</p>
+<p>备注：</p>
+<p>anaconda</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/记录/" rel="tag"># 记录</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/08/20191008记录/" rel="next" title="20190909记录">
+                  <i class="fa fa-chevron-left"></i> 20190909记录
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/28/20191028记录/" rel="prev" title="20191028记录">
+                  20191028记录 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1021"><span class="nav-number">1.</span> <span class="nav-text">1021</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加录制后运行"><span class="nav-number">1.1.</span> <span class="nav-text">添加录制后运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#录制报错"><span class="nav-number">1.2.</span> <span class="nav-text">录制报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">1.3.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1022"><span class="nav-number">2.</span> <span class="nav-text">1022</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">2.1.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源检查工具-检查特效"><span class="nav-number">2.2.</span> <span class="nav-text">资源检查工具-检查特效</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加特效粒子数的统计"><span class="nav-number">2.2.1.</span> <span class="nav-text">添加特效粒子数的统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区分发射模型的特效"><span class="nav-number">2.2.2.</span> <span class="nav-text">区分发射模型的特效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打印自定义特效"><span class="nav-number">2.2.3.</span> <span class="nav-text">打印自定义特效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义特效转换"><span class="nav-number">2.2.4.</span> <span class="nav-text">自定义特效转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试-1"><span class="nav-number">2.3.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1023"><span class="nav-number">3.</span> <span class="nav-text">1023</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jre和jdk环境变量设置"><span class="nav-number">3.1.</span> <span class="nav-text">jre和jdk环境变量设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试-2"><span class="nav-number">3.2.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转换自定义特效"><span class="nav-number">3.3.</span> <span class="nav-text">转换自定义特效</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1024"><span class="nav-number">4.</span> <span class="nav-text">1024</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化"><span class="nav-number">4.1.</span> <span class="nav-text">自动化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义特效转换-1"><span class="nav-number">4.2.</span> <span class="nav-text">自定义特效转换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1025"><span class="nav-number">5.</span> <span class="nav-text">1025</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1026"><span class="nav-number">6.</span> <span class="nav-text">1026</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化测试"><span class="nav-number">6.1.</span> <span class="nav-text">自动化测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目前情况"><span class="nav-number">6.1.1.</span> <span class="nav-text">目前情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#待完成"><span class="nav-number">6.1.2.</span> <span class="nav-text">待完成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">6.1.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nsight使用"><span class="nav-number">6.2.</span> <span class="nav-text">Nsight使用</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/touxiang.jpg"
+      alt="木可">
+  <p class="site-author-name" itemprop="name">木可</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/plainliu" title="GitHub &rarr; https://github.com/plainliu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木可</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

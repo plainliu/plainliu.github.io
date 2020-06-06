@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="0113WP工具自动化集成总流程 开发环境开发  分别在各自的分支开发  开发分支上单元测试通过  联调，以例子验证功能完整并通过    合并到主干触发自动化测试  自动进行单元测试，不通过则通知开发人员并回到开发阶段解决；  通过则build并进行集成测试，期间build和IT有不通过，回到开发阶段解决；  （IT通过后进入QA阶段，以项目资源进行测试，通过后记录）  IT通过后记录两边的通过版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20200113记录">
+<meta property="og:url" content="http://plainliu.github.io/2020/01/13/20200113记录/index.html">
+<meta property="og:site_name" content="时习">
+<meta property="og:description" content="0113WP工具自动化集成总流程 开发环境开发  分别在各自的分支开发  开发分支上单元测试通过  联调，以例子验证功能完整并通过    合并到主干触发自动化测试  自动进行单元测试，不通过则通知开发人员并回到开发阶段解决；  通过则build并进行集成测试，期间build和IT有不通过，回到开发阶段解决；  （IT通过后进入QA阶段，以项目资源进行测试，通过后记录）  IT通过后记录两边的通过版">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1578886179366.png">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1578895500272.png">
+<meta property="og:image" content="c:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990096140.png">
+<meta property="og:image" content="c:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990190468.png">
+<meta property="og:image" content="c:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990648714.png">
+<meta property="og:image" content="c:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990858105.png">
+<meta property="og:image" content="c:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990944847.png">
+<meta property="og:updated_time" content="2020-01-20T12:53:48.606Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="20200113记录">
+<meta name="twitter:description" content="0113WP工具自动化集成总流程 开发环境开发  分别在各自的分支开发  开发分支上单元测试通过  联调，以例子验证功能完整并通过    合并到主干触发自动化测试  自动进行单元测试，不通过则通知开发人员并回到开发阶段解决；  通过则build并进行集成测试，期间build和IT有不通过，回到开发阶段解决；  （IT通过后进入QA阶段，以项目资源进行测试，通过后记录）  IT通过后记录两边的通过版">
+<meta name="twitter:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1578886179366.png">
+  <link rel="canonical" href="http://plainliu.github.io/2020/01/13/20200113记录/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>20200113记录 | 时习</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">时习</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">欲慎其终者，先追其远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://plainliu.github.io/2020/01/13/20200113记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木可">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="时习">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">20200113记录
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-01-13 10:45:17" itemprop="dateCreated datePublished" datetime="2020-01-13T10:45:17+08:00">2020-01-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-20 20:53:48" itemprop="dateModified" datetime="2020-01-20T20:53:48+08:00">2020-01-20</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="0113"><a href="#0113" class="headerlink" title="0113"></a>0113</h1><h2 id="WP工具自动化集成"><a href="#WP工具自动化集成" class="headerlink" title="WP工具自动化集成"></a>WP工具自动化集成</h2><h3 id="总流程"><a href="#总流程" class="headerlink" title="总流程"></a>总流程</h3><p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1578886179366.png" alt="1578886179366"></p><ol>
+<li><p>开发环境开发</p>
+<ul>
+<li><p>分别在各自的分支开发</p>
+</li>
+<li><p>开发分支上<strong>单元测试</strong>通过</p>
+</li>
+<li><p>联调，以例子验证功能完整并通过</p>
+</li>
+</ul>
+</li>
+<li><p>合并到主干触发自动化测试</p>
+<ul>
+<li><p>自动进行单元测试，不通过则通知开发人员并回到开发阶段解决；</p>
+</li>
+<li><p>通过则build并进行<strong>集成测试</strong>，期间build和IT有不通过，回到开发阶段解决；</p>
+</li>
+<li><p>（IT通过后进入QA阶段，以项目资源进行测试，通过后记录）</p>
+</li>
+<li><p>IT通过后记录两边的通过版本/tag（记录表），以便查找并部署到正式环境</p>
+</li>
+</ul>
+</li>
+<li><p>部署到正式环境</p>
+<p>从集成测试通过的记录表中查找成功的记录并部署</p>
+</li>
+</ol><a id="more"></a>
+
+<h3 id="部署过程"><a href="#部署过程" class="headerlink" title="部署过程"></a>部署过程</h3><p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1578895500272.png" alt="1578895500272"></p>
+<p>部署期间保持版本匹配，对用户进行暂时关闭</p>
+<ul>
+<li>WP修改版本</li>
+<li>F3D修改版本/配置</li>
+</ul>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><ol>
+<li>触发（job轮询）</li>
+<li>对应触发svn/git的单元测试</li>
+<li>集成测试（继承测试的版本应该和记录的通过版本一致）</li>
+</ol>
+<h3 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h3><p>与阿杜讨论</p>
+<ol>
+<li><p>单元测试</p>
+<p>逻辑接口可以做</p>
+<p>显示不可以做</p>
+</li>
+<li><p>集成测试</p>
+<p>入库的问题</p>
+</li>
+</ol>
+<p>之后</p>
+<p>F3D：</p>
+<h2 id="自动化集成具体任务"><a href="#自动化集成具体任务" class="headerlink" title="自动化集成具体任务"></a>自动化集成具体任务</h2><h3 id="一、触发测试"><a href="#一、触发测试" class="headerlink" title="一、触发测试"></a>一、触发测试</h3><p>提交到主干自动触发自动化集成的测试过程</p>
+<ul>
+<li><p>实现</p>
+<p>Jenkins</p>
+</li>
+<li><p>触发内容</p>
+<ol>
+<li>F3D的svn提交触发</li>
+<li>WP的git提交触发</li>
+</ol>
+</li>
+<li><p>触发机制</p>
+<ol>
+<li>轮询机制</li>
+<li>提交触发（钩子）</li>
+</ol>
+</li>
+</ul>
+<h3 id="二、单元测试"><a href="#二、单元测试" class="headerlink" title="二、单元测试"></a>二、单元测试</h3><p><strong>F3D</strong></p>
+<ul>
+<li><p>获取模块资源</p>
+<p>checksvn</p>
+</li>
+<li><p>单元测试</p>
+<p>所有模块的单元测试</p>
+</li>
+<li><p>build（导出工具）</p>
+<p>如果工具没有发生改变，则不继续测试</p>
+</li>
+<li><p><strong>job的相关测试？</strong></p>
+<p>job使用的代码应该受版本控制</p>
+</li>
+</ul>
+<p><strong>WP</strong></p>
+<ul>
+<li><p>获取资源</p>
+<p>git clone/pull</p>
+</li>
+<li><p>单元测试</p>
+<p>逻辑部分/显示部分</p>
+<p>job调用单元测试命令</p>
+</li>
+<li><p>build</p>
+</li>
+</ul>
+<h3 id="三、集成测试"><a href="#三、集成测试" class="headerlink" title="三、集成测试"></a>三、集成测试</h3><p>当前WP“一键评估/打包”的扩展</p>
+<ul>
+<li><p>job调用集成测试</p>
+<p>这里需要类似原按钮的api调用</p>
+</li>
+<li><p>集成测试的脚本存储和测试内容的维护</p>
+</li>
+<li><p>编写集成测试的脚本和资源（大部分需要WP做）</p>
+</li>
+</ul>
+<h3 id="四、通过的记录表"><a href="#四、通过的记录表" class="headerlink" title="四、通过的记录表"></a>四、通过的记录表</h3><ul>
+<li><p>存储位置</p>
+</li>
+<li><p>存储表信息格式</p>
+<p>对于上线版本的处理，根据module分支选择对应的记录表</p>
+</li>
+<li><p>维护方式</p>
+</li>
+</ul>
+<p>TODO：</p>
+<p>首先把框架搭起来，串起来线，再一步步填充</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><input checked disabled type="checkbox"> 自动化单元测试的引擎换成最新的不带验证的引擎</li>
+<li><input checked disabled type="checkbox"> 尝试远程连接启动渲染窗口</li>
+</ul>
+<h1 id="0114"><a href="#0114" class="headerlink" title="0114"></a>0114</h1><h2 id="持续集成"><a href="#持续集成" class="headerlink" title="持续集成"></a>持续集成</h2><p>参考<a href="https://stackoverflow.com/questions/10014252/jenkins-ci-how-to-trigger-builds-on-svn-commit" target="_blank" rel="noopener">https://stackoverflow.com/questions/10014252/jenkins-ci-how-to-trigger-builds-on-svn-commit</a></p>
+<p>job设置轮询</p>
+<ol>
+<li>使用svn版本控制<ul>
+<li>绝对路径测试部通过</li>
+</ul>
+</li>
+<li>使用poll SCM轮询<ul>
+<li>设置轮询间隔</li>
+</ul>
+</li>
+</ol>
+<p>单元测试，判断是否通过</p>
+<ol>
+<li>运行相关单元测试</li>
+<li>看是否通过</li>
+<li></li>
+</ol>
+<p>模块本身的集成</p>
+<p>只要提交，触发，测试所有，发送结果到群</p>
+<p>模块的提交触发更大的集成功能</p>
+<p>如果通过，看相关功能的代码是否有改动；</p>
+<p>如果有改动，触发集成测试</p>
+<p>过程：</p>
+<ol>
+<li><p>触发启动</p>
+<p>git/svn</p>
+<p>先拿资源</p>
+</li>
+<li><p>根据触发的原因做单元测试</p>
+</li>
+<li><p>集成测试</p>
+</li>
+</ol>
+<h2 id="远程跑任务"><a href="#远程跑任务" class="headerlink" title="远程跑任务"></a>远程跑任务</h2><p>创建定时任务</p>
+<p><img src="C:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990096140.png" alt="1578990096140"></p>
+<p><img src="C:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990190468.png" alt="1578990190468"></p>
+<p>设置为开机启动，</p>
+<p>选择操作：启动程序</p>
+<p>填写启动的脚本为需要启动的bat</p>
+<p><img src="C:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990648714.png" alt="1578990648714"></p>
+<p>选择下面的复选框</p>
+<p>打开任务属性对话框</p>
+<p><img src="C:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990858105.png" alt="1578990858105"></p>
+<p>点击确定，出现下面的界面，勾选上面的“不存储密码”，则不出现下面的弹窗</p>
+<p><img src="C:%5Cljj%5Cgit%5Cworknotes%5Csource_posts%5Cimage%5C1578990944847.png" alt="1578990944847"></p>
+<p>上面的方式没成功</p>
+<p>将快捷方式放到</p>
+<p><code>C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code></p>
+<p>在登录时启动</p>
+<p>换成</p>
+<p><code>C:\Users\Default\AppData\Roaming\Microsoft\Windows\Start Menu\Programs</code></p>
+<p>不好使</p>
+<p>开机用计划任务的方式自动拉起fancy-dev，有主循环的例子进入不到主循环，用-tool模式没问题，启动后没有窗口显示</p>
+<h1 id="0115"><a href="#0115" class="headerlink" title="0115"></a>0115</h1><p>15秒启动新bat</p>
+<h2 id="修改模型检查标准"><a href="#修改模型检查标准" class="headerlink" title="修改模型检查标准"></a>修改模型检查标准</h2><p>WP</p>
+<h2 id="云主机机器人"><a href="#云主机机器人" class="headerlink" title="云主机机器人"></a>云主机机器人</h2><p>开机自启动测试</p>
+<h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_System.getUsedMemory = <span class="function"><span class="keyword">function</span><span class="params">(self, immediate)</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自动化集成"><a href="#自动化集成" class="headerlink" title="自动化集成"></a>自动化集成</h2><ol>
+<li><p>触发</p>
+<p>svn +  git 两个库同时作为轮询对象</p>
+<p>co svn的地址能否为绝对地址</p>
+</li>
+<li><p>由能够两个库触发决定是否拆开UT</p>
+</li>
+<li><p>UT部分</p>
+<ul>
+<li>真实的UT（bat启动）</li>
+<li>将UT结果变成grovy文件</li>
+<li>由是否通过决定下一步的操作</li>
+</ul>
+</li>
+<li><p>在git库中增加一个“发送消息”</p>
+</li>
+</ol>
+<h3 id="groovy"><a href="#groovy" class="headerlink" title="groovy"></a>groovy</h3><p>全局变量引用</p>
+<p>env.xxx 环境变量</p>
+<p>params.xxx 定义参数</p>
+<p>currentBuild.xxx 当前pipeline的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Jenkinsfile (Scripted Pipeline)</span><br><span class="line">node &#123;</span><br><span class="line">    checkout scm </span><br><span class="line">    /* .. snip .. */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该<code>checkout</code>步骤将检出从源控制代码; <code>scm</code>是一个特殊变量，指示<code>checkout</code>步骤克隆触发此Pipeline运行的特定修订。</p>
+<p>假设一个名为“Greeting”的String参数已经在配置中 Jenkinsfile，它可以通过${params.Greeting}以下方式访问该参数</p>
+<p>声明性Pipeline默认支持robust失败处理经由其<a href="https://jenkins.io/doc/book/pipeline/syntax/#post" target="_blank" rel="noopener">post section</a>，其允许声明许多不同的“post conditions”，例如：always，unstable，success，failure，和 changed。“ Pipeline<a href="https://jenkins.io/doc/book/pipeline/jenkinsfile/#syntax" target="_blank" rel="noopener">语法”</a>部分提供了有关如何使用各种帖子条件的更多详细信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">post &#123;</span><br><span class="line">    always &#123;</span><br><span class="line">        junit &apos;**/target/*.xml&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    failure &#123;</span><br><span class="line">        mail to: team@example.com, subject: &apos;The Pipeline failed :(&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="post条件"><a href="#post条件" class="headerlink" title="post条件"></a>post条件</h5><ul>
+<li><p><code>always</code></p>
+<p>运行，无论Pipeline运行的完成状态如何。</p>
+</li>
+<li><p><code>changed</code></p>
+<p>只有当前Pipeline运行的状态与先前完成的Pipeline的状态不同时，才能运行。</p>
+</li>
+<li><p><code>failure</code></p>
+<p>仅当当前Pipeline处于“失败”状态时才运行，通常在Web UI中用红色指示表示。</p>
+</li>
+<li><p><code>success</code></p>
+<p>仅当当前Pipeline具有“成功”状态时才运行，通常在具有蓝色或绿色指示的Web UI中表示。</p>
+</li>
+<li><p><code>unstable</code></p>
+<p>只有当前Pipeline具有“不稳定”状态，通常由测试失败，代码违例等引起，才能运行。通常在具有黄色指示的Web UI中表示。</p>
+</li>
+<li><p><code>aborted</code></p>
+<p>只有当前Pipeline处于“中止”状态时，才会运行，通常是由于Pipeline被手动中止。通常在具有灰色指示的Web UI中表示。</p>
+</li>
+</ul>
+<h4 id="可用选项"><a href="#可用选项" class="headerlink" title="可用选项"></a>可用选项</h4><ul>
+<li><p>buildDiscarder</p>
+<p>持久化工件和控制台输出，用于最近Pipeline运行的具体数量。例如：<code>options { buildDiscarder(logRotator(numToKeepStr: &#39;1&#39;)) }</code></p>
+</li>
+<li><p>disableConcurrentBuilds</p>
+<p>不允许并行执行Pipeline。可用于防止同时访问共享资源等。例如：<code>options { disableConcurrentBuilds() }</code></p>
+</li>
+<li><p>skipDefaultCheckout</p>
+<p>在<code>agent</code>指令中默认跳过来自源代码控制的代码。例如：<code>options { skipDefaultCheckout() }</code></p>
+</li>
+<li><p>skipStagesAfterUnstable</p>
+<p>一旦构建状态进入了“不稳定”状态，就跳过阶段。例如：<code>options { skipStagesAfterUnstable() }</code></p>
+</li>
+<li><p>timeout</p>
+<p>设置Pipeline运行的超时时间，之后Jenkins应该中止Pipeline。例如：<code>options { timeout(time: 1, unit: &#39;HOURS&#39;) }</code></p>
+</li>
+<li><p>重试</p>
+<p>失败后，重试整个Pipeline指定的次数。例如：<code>options { retry(3) }</code></p>
+</li>
+<li><p>timestamps</p>
+<p>预处理由Pipeline生成的所有控制台输出运行时间与发射线的时间。例如：<code>options { timestamps() }</code></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Jenkinsfile (Declarative Pipeline)</span><br><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    options &#123;</span><br><span class="line">        timeout(time: 1, unit: &apos;HOURS&apos;) </span><br><span class="line">    &#125;</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(&apos;Example&apos;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo &apos;Hello World&apos;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="可用参数"><a href="#可用参数" class="headerlink" title="可用参数"></a>可用参数</h5><ul>
+<li><p>串</p>
+<p>字符串类型的参数，例如： <code>parameters { string(name: &#39;DEPLOY_ENV&#39;, defaultValue: &#39;staging&#39;, description: &#39;&#39;) }</code></p>
+</li>
+<li><p>booleanParam</p>
+<p>一个布尔参数，例如： <code>parameters { booleanParam(name: &#39;DEBUG_BUILD&#39;, defaultValue: true, description: &#39;&#39;) }</code></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Jenkinsfile (Declarative Pipeline)</span><br><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    parameters &#123;</span><br><span class="line">        string(name: &apos;PERSON&apos;, defaultValue: &apos;Mr Jenkins&apos;, description: &apos;Who should I say hello to?&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(&apos;Example&apos;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo &quot;Hello $&#123;params.PERSON&#125;&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h4><p>该triggers指令定义了Pipeline应重新触发的自动化方式。对于与源代码集成的Pipeline，如GitHub或BitBucket，triggers可能不需要基于webhook的集成可能已经存在。目前只有两个可用的触发器是cron和pollSCM。</p>
+<ul>
+<li><p>cron</p>
+<p>接受一个cron风格的字符串来定义Pipeline应重新触发的常规间隔，例如： <code>triggers { cron(&#39;H 4/* 0 0 1-5&#39;) }</code></p>
+</li>
+<li><p>pollSCM</p>
+<p>接受一个cron风格的字符串来定义Jenkins应该检查新的源更改的常规间隔。如果存在新的更改，则Pipeline将被重新触发。例如：<code>triggers { pollSCM(&#39;H 4/* 0 0 1-5&#39;) }</code></p>
+</li>
+</ul>
+<h4 id="内置条件"><a href="#内置条件" class="headerlink" title="内置条件"></a>内置条件</h4><ul>
+<li><p>branch</p>
+<p>当正在构建的分支与给出的分支模式匹配时执行阶段，例如：<code>when { branch &#39;master&#39; }</code>。请注意，这仅适用于多分支Pipeline。</p>
+</li>
+<li><p>environment</p>
+<p>当指定的环境变量设置为给定值时执行阶段，例如： <code>when { environment name: &#39;DEPLOY_TO&#39;, value: &#39;production&#39; }</code></p>
+</li>
+<li><p>expression</p>
+<p>当指定的Groovy表达式求值为true时执行阶段，例如： <code>when { expression { return params.DEBUG_BUILD } }</code></p>
+</li>
+<li><p>not</p>
+<p>当嵌套条件为false时执行阶段。必须包含一个条件。例如：<code>when { not { branch &#39;master&#39; } }</code></p>
+</li>
+<li><p>allOf</p>
+<p>当所有嵌套条件都为真时，执行舞台。必须至少包含一个条件。例如：<code>when { allOf { branch &#39;master&#39;; environment name: &#39;DEPLOY_TO&#39;, value: &#39;production&#39; } }</code></p>
+</li>
+<li><p>anyOf</p>
+<p>当至少一个嵌套条件为真时执行舞台。必须至少包含一个条件。例如：<code>when { anyOf { branch &#39;master&#39;; branch &#39;staging&#39; } }</code></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Jenkinsfile (Declarative Pipeline)</span><br><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(&apos;Example Build&apos;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo &apos;Hello World&apos;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        stage(&apos;Example Deploy&apos;) &#123;</span><br><span class="line">            when &#123;</span><br><span class="line">                branch &apos;production&apos;</span><br><span class="line">                anyOf &#123;</span><br><span class="line">                    environment name: &apos;DEPLOY_TO&apos;, value: &apos;production&apos;</span><br><span class="line">                    environment name: &apos;DEPLOY_TO&apos;, value: &apos;staging&apos;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo &apos;Deploying&apos;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="0116"><a href="#0116" class="headerlink" title="0116"></a>0116</h1><h2 id="自动化测试例子"><a href="#自动化测试例子" class="headerlink" title="自动化测试例子"></a>自动化测试例子</h2><p>修改例子</p>
+<p>15719-lua内存分配统计</p>
+<h2 id="云主机"><a href="#云主机" class="headerlink" title="云主机"></a>云主机</h2><p><strong>计划任务</strong></p>
+<p>镜像部署测试</p>
+<p>引擎替换</p>
+<p><strong>启动多次</strong></p>
+<p>间隔30-60s，设置成45秒</p>
+<p><strong>部署说明</strong></p>
+<ol>
+<li>过程</li>
+<li>注意事项</li>
+</ol>
+<h2 id="自动化测试例子工具"><a href="#自动化测试例子工具" class="headerlink" title="自动化测试例子工具"></a>自动化测试例子工具</h2><ol>
+<li>拷贝dll</li>
+<li>debug版的问题，修改成绝对路径</li>
+<li>fancy-sample的地址寻找</li>
+<li>拷贝lic位置</li>
+<li>保留单元测试结果</li>
+</ol>
+<h2 id="自动化集成-1"><a href="#自动化集成-1" class="headerlink" title="自动化集成"></a>自动化集成</h2><p>把模块检查功能提取到库中</p>
+<p>模块检查又分为</p>
+<ul>
+<li>格式检查</li>
+<li>单元测试</li>
+</ul>
+<p>模块检查调用如上两个方法</p>
+<p>语法</p>
+<p><a href="https://jenkins.io/doc/book/pipeline/syntax/" target="_blank" rel="noopener">https://jenkins.io/doc/book/pipeline/syntax/</a></p>
+<h1 id="0117"><a href="#0117" class="headerlink" title="0117"></a>0117</h1><h2 id="云主机机器人-1"><a href="#云主机机器人-1" class="headerlink" title="云主机机器人"></a>云主机机器人</h2><p>服务器号被封了，等解决</p>
+<p>提取镜像部署过程</p>
+<ol>
+<li><p>选一台部署机器，将替换的运行内容部署好</p>
+</li>
+<li><p>点击关机</p>
+</li>
+<li><p>…中选择其他，提取镜像</p>
+</li>
+<li><p>在镜像的页面中，一键部署多台机器</p>
+<p>注意：http连接，DHCP自动分配IP地址，如果是静态的，则需要手动分配IP地址</p>
+</li>
+<li><p>等待，结束</p>
+</li>
+</ol>
+<p>后续过程</p>
+<ol>
+<li>手动修改一台机器上的内容</li>
+<li>通过jenkins调用云主机的api进行一键部署，完成提取镜像、复制镜像、启动机器的操作</li>
+<li>（启动机器即开始跑流程），停止即批量关机</li>
+</ol>
+<h2 id="自动化测试例子工具-1"><a href="#自动化测试例子工具-1" class="headerlink" title="自动化测试例子工具"></a>自动化测试例子工具</h2><p>修改</p>
+<p>优化</p>
+<h2 id="自动化集成-2"><a href="#自动化集成-2" class="headerlink" title="自动化集成"></a>自动化集成</h2><p>构造测试资源（通过和不通过的版本）</p>
+<p>补充Jenkinsfile</p>
+<p>测试流程</p>
+<p>tips</p>
+<ol>
+<li>单元测试定时器需要在启动单个单元测试时加进来</li>
+<li>Package_Toolkit下文件位置错误</li>
+</ol>
+<h1 id="0119"><a href="#0119" class="headerlink" title="0119"></a>0119</h1><h2 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h2><ol>
+<li>触发机制</li>
+<li>发消息</li>
+</ol>
+<p>调用子job的代码需要指定子job node</p>
+<h2 id="云主机-1"><a href="#云主机-1" class="headerlink" title="云主机"></a>云主机</h2><p>需要替换引擎</p>
+<p>自动化部署</p>
+<h2 id="单元测试结果"><a href="#单元测试结果" class="headerlink" title="单元测试结果"></a>单元测试结果</h2><p>打包模块不通过</p>
+<p>资源检查模块不通过</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/01/06/20200106记录/" rel="next" title="20200106记录">
+                  <i class="fa fa-chevron-left"></i> 20200106记录
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/01/20/20200120记录/" rel="prev" title="20200120记录">
+                  20200120记录 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0113"><span class="nav-number">1.</span> <span class="nav-text">0113</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WP工具自动化集成"><span class="nav-number">1.1.</span> <span class="nav-text">WP工具自动化集成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总流程"><span class="nav-number">1.1.1.</span> <span class="nav-text">总流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署过程"><span class="nav-number">1.1.2.</span> <span class="nav-text">部署过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实践"><span class="nav-number">1.1.3.</span> <span class="nav-text">实践</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讨论"><span class="nav-number">1.1.4.</span> <span class="nav-text">讨论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化集成具体任务"><span class="nav-number">1.2.</span> <span class="nav-text">自动化集成具体任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、触发测试"><span class="nav-number">1.2.1.</span> <span class="nav-text">一、触发测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、单元测试"><span class="nav-number">1.2.2.</span> <span class="nav-text">二、单元测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、集成测试"><span class="nav-number">1.2.3.</span> <span class="nav-text">三、集成测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、通过的记录表"><span class="nav-number">1.2.4.</span> <span class="nav-text">四、通过的记录表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">1.3.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0114"><span class="nav-number">2.</span> <span class="nav-text">0114</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#持续集成"><span class="nav-number">2.1.</span> <span class="nav-text">持续集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程跑任务"><span class="nav-number">2.2.</span> <span class="nav-text">远程跑任务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0115"><span class="nav-number">3.</span> <span class="nav-text">0115</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改模型检查标准"><span class="nav-number">3.1.</span> <span class="nav-text">修改模型检查标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#云主机机器人"><span class="nav-number">3.2.</span> <span class="nav-text">云主机机器人</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化测试"><span class="nav-number">3.3.</span> <span class="nav-text">自动化测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化集成"><span class="nav-number">3.4.</span> <span class="nav-text">自动化集成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#groovy"><span class="nav-number">3.4.1.</span> <span class="nav-text">groovy</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#post条件"><span class="nav-number">3.4.1.0.1.</span> <span class="nav-text">post条件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可用选项"><span class="nav-number">3.4.1.1.</span> <span class="nav-text">可用选项</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#可用参数"><span class="nav-number">3.4.1.1.1.</span> <span class="nav-text">可用参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#触发器"><span class="nav-number">3.4.1.2.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内置条件"><span class="nav-number">3.4.1.3.</span> <span class="nav-text">内置条件</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0116"><span class="nav-number">4.</span> <span class="nav-text">0116</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化测试例子"><span class="nav-number">4.1.</span> <span class="nav-text">自动化测试例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#云主机"><span class="nav-number">4.2.</span> <span class="nav-text">云主机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化测试例子工具"><span class="nav-number">4.3.</span> <span class="nav-text">自动化测试例子工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化集成-1"><span class="nav-number">4.4.</span> <span class="nav-text">自动化集成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0117"><span class="nav-number">5.</span> <span class="nav-text">0117</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#云主机机器人-1"><span class="nav-number">5.1.</span> <span class="nav-text">云主机机器人</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化测试例子工具-1"><span class="nav-number">5.2.</span> <span class="nav-text">自动化测试例子工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化集成-2"><span class="nav-number">5.3.</span> <span class="nav-text">自动化集成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0119"><span class="nav-number">6.</span> <span class="nav-text">0119</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#集成"><span class="nav-number">6.1.</span> <span class="nav-text">集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#云主机-1"><span class="nav-number">6.2.</span> <span class="nav-text">云主机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单元测试结果"><span class="nav-number">6.3.</span> <span class="nav-text">单元测试结果</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/touxiang.jpg"
+      alt="木可">
+  <p class="site-author-name" itemprop="name">木可</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/plainliu" title="GitHub &rarr; https://github.com/plainliu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木可</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="待办添加newframe接口编辑器的描边替换插入修改自动跑例子的测试（报错不停、13690、相同版本引擎跑俩不同）marker排序问题（模块、测试）0902table.sort(tb, cmpfunc)相等返回false，否则有问题0903测试移动端新一帧接口marker排序的问题edgemarker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20190902记录">
+<meta property="og:url" content="http://plainliu.github.io/2019/09/02/20190902记录/index.html">
+<meta property="og:site_name" content="时习">
+<meta property="og:description" content="待办添加newframe接口编辑器的描边替换插入修改自动跑例子的测试（报错不停、13690、相同版本引擎跑俩不同）marker排序问题（模块、测试）0902table.sort(tb, cmpfunc)相等返回false，否则有问题0903测试移动端新一帧接口marker排序的问题edgemarker">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-12T13:13:24.745Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="20190902记录">
+<meta name="twitter:description" content="待办添加newframe接口编辑器的描边替换插入修改自动跑例子的测试（报错不停、13690、相同版本引擎跑俩不同）marker排序问题（模块、测试）0902table.sort(tb, cmpfunc)相等返回false，否则有问题0903测试移动端新一帧接口marker排序的问题edgemarker">
+  <link rel="canonical" href="http://plainliu.github.io/2019/09/02/20190902记录/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>20190902记录 | 时习</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">时习</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">欲慎其终者，先追其远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://plainliu.github.io/2019/09/02/20190902记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木可">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="时习">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">20190902记录
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-02 10:43:38" itemprop="dateCreated datePublished" datetime="2019-09-02T10:43:38+08:00">2019-09-02</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-12 21:13:24" itemprop="dateModified" datetime="2019-09-12T21:13:24+08:00">2019-09-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WorkSummary/" itemprop="url" rel="index"><span itemprop="name">WorkSummary</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>待办</strong></p><p>添加newframe接口</p><p>编辑器的描边替换</p><p><strong>插入</strong></p><p>修改自动跑例子的测试（报错不停、13690、相同版本引擎跑俩不同）</p><p>marker排序问题（模块、测试）</p><h1 id="0902"><a href="#0902" class="headerlink" title="0902"></a>0902</h1><p>table.sort(tb, cmpfunc)</p><p>相等返回false，否则有问题</p><h1 id="0903"><a href="#0903" class="headerlink" title="0903"></a>0903</h1><p>测试移动端新一帧接口</p><p>marker排序的问题</p><p>edge</p><h2 id="marker"><a href="#marker" class="headerlink" title="marker"></a>marker</h2><a id="more"></a>
+
+
+
+
+
+
+
+
+
+
+<p>gra</p>
+<p>table.sort() 比较函数中返回false</p>
+<p><strong>记录</strong></p>
+<p>gra例子中的内容会发生排序错误</p>
+<ul>
+<li><p>将数据从编辑器中分出来</p>
+</li>
+<li><p>对比正确效果和错误效果的比较过程</p>
+</li>
+</ul>
+<h1 id="0904"><a href="#0904" class="headerlink" title="0904"></a>0904</h1><p>detail的问题，不能保存下来</p>
+<p>将detail属性从geo上移到node上</p>
+<h1 id="0905"><a href="#0905" class="headerlink" title="0905"></a>0905</h1><p>RDSetting的提取</p>
+<p>分析：</p>
+<p>RDSetting中的函数</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">_PostProcess:cloneData()</span><br><span class="line">_PostProcess:clone(pp)</span><br><span class="line">_Color:clone(color)</span><br><span class="line"></span><br><span class="line"><span class="built_in">_G</span>._LRDSetting</span><br><span class="line"></span><br><span class="line">_Scene.new(filename)</span><br><span class="line">_Scene:cloneSceneRDSetting(scene)</span><br><span class="line">_Scene:useRDSetting(db)</span><br><span class="line">_Scene:saveRDSetting(filename)</span><br><span class="line"></span><br><span class="line">_RenderDevice:useSceneSetting(scene)</span><br><span class="line">_RenderDevice:pushSceneSetting(scene)</span><br><span class="line">_RenderDevice:popSceneSetting()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Edge替换计划</span></span><br><span class="line"><span class="bullet">1. </span>把SceneRDSetting从lib中提出来，提成模块，修改几个编辑器中dofile方式为_require</span><br><span class="line"><span class="bullet">2. </span>针对SceneRDSetting的功能，给模块加单元测试</span><br><span class="line"><span class="bullet">3. </span>把SceneRDSetting中的edgeSetting替换成类</span><br><span class="line"><span class="bullet">4. </span>添加edgeSetting的元数据，跑通结构新界面（已写好）</span><br><span class="line"><span class="bullet">5. </span>使Editor<span class="emphasis">_EdgeSetting新界面中的调整生效（可能通过扩展_</span>rd的方法）</span><br><span class="line"><span class="bullet">6. </span>用新detail面板更换Editor_EdgeSetting</span><br><span class="line"><span class="bullet">7. </span>新detail面板加编辑器</span><br><span class="line"><span class="bullet">8. </span>处理隐藏显示等</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="bullet">6. </span>加载不同场景编辑描边，并保存配置，重新加载——跑通</span><br><span class="line"><span class="bullet">7. </span>测试并解决其他新老结构可能存在的不合之处</span><br><span class="line"></span><br><span class="line"><span class="section"># Edge界面替换记录</span></span><br><span class="line"><span class="section">## 1. SceneRDSetting变成模块</span></span><br><span class="line">修改内容</span><br><span class="line"><span class="bullet">- </span>从lib中删除postprocess相关的两个文件</span><br><span class="line"><span class="bullet">- </span>修改dofile为 _ require（所有编辑器）</span><br><span class="line"><span class="bullet">- </span>删除copylib中RDSetting相关文件的行为（所有编辑器，模型编辑器没有用到）</span><br><span class="line"><span class="bullet">- </span>删除出版模块中拷贝RDSetting文件的代码</span><br><span class="line"></span><br><span class="line">问题记录</span><br><span class="line"><span class="bullet">- </span>draw(rOrbit, gOrbit, bOrbit)方法和allconfigname历史遗留（删除）</span><br><span class="line"><span class="bullet">- </span>postprocess的new方法中关于bloomtint颜色的初始值（已确认）</span><br><span class="line"><span class="bullet">- </span>重写postprocess的new方法已经有编辑因子的属性，与再增加一个postSetting类是否冗余（提取后处理类需要考虑）</span><br><span class="line"><span class="bullet">- </span>编辑器中关于require方法重定义，确认编辑器出版是否用到</span><br><span class="line"></span><br><span class="line"><span class="section">## 2. 对SceneRDSetting的功能，给模块加单元测试</span></span><br><span class="line">修改内容</span><br><span class="line"><span class="bullet">- </span>删除draw(rOrbit, gOrbit, bOrbit)方法和allconfigname内容</span><br><span class="line"><span class="bullet">- </span>删除多出的编辑因子初始化</span><br><span class="line"><span class="bullet">- </span>添加每个对外接口的单元测试</span><br><span class="line"></span><br><span class="line">问题记录</span><br><span class="line"><span class="bullet">- </span>接口对应的参数比较多（rd相关的属性），单元测试覆盖的全面性问题</span><br><span class="line"><span class="bullet">- </span>测试接口拿到的属性，应该与谁进行比较，默认值 <span class="emphasis">_ LRDSetting之后会分散地替换到每个类的构造中（先用 _</span> LRDSetting，提取成类之后，修改为与新建类对象的默认属性做比较）</span><br><span class="line"><span class="bullet">- </span>rd和drawboard的关系</span><br><span class="line"><span class="bullet">- </span>markMesh的作用是什么</span><br><span class="line"></span><br><span class="line"><span class="section">## 3. 把SceneRDSetting中的edgeSetting替换成类</span></span><br><span class="line">修改内容</span><br><span class="line"><span class="bullet">- </span>检查 _ EdgeSetting类的定义并调整</span><br><span class="line"><span class="bullet">- </span>重写SceneRDSetting（更新结构）</span><br><span class="line"><span class="bullet">- </span>detailRange应用的地方做修改，属于scene的属性，不用在RDSetting中修改</span><br><span class="line"><span class="bullet">- </span>扩展rd:use方法</span><br><span class="line"><span class="bullet">- </span>对外接口干掉PostProcess:cloneData()、scene:cloneSceneRDSetting()、PostProcess:clone(pp)</span><br><span class="line"><span class="bullet">- </span>后处理恢复默认的功能用到全局的变量（用局部后处理设置类的对象代替）</span><br><span class="line"></span><br><span class="line">问题记录</span><br><span class="line"><span class="bullet">- </span>类对象的初始值（按照 _ LRDSetting中的值设置）</span><br><span class="line"><span class="bullet">- </span>detailRange为sen的属性，为什么在RDSetting中保存一份，而不是sen存取</span><br><span class="line"><span class="bullet">- </span>skybox属于sen的属性，范围和缩放在天空盒起效的情况下成为多存的一份配置</span><br><span class="line"><span class="bullet">- </span>后处理配置从一个后处理对象变成自定义类，需要在切换场景时后处理对象的应用做修改</span><br><span class="line"><span class="bullet">- </span>mtlEnvironmentTexture的应用过程没整明白</span><br><span class="line"><span class="bullet">- </span>orbit的保存和应用过程（在场景编辑器中干掉）</span><br><span class="line"><span class="bullet">- </span>shadow相关的属性文档中比编辑器中多</span><br><span class="line"><span class="bullet">- </span>postprocess的设置，last值</span><br><span class="line"><span class="bullet">- </span>环境贴图眼睛预览（之后去掉编辑器中的设置）</span><br><span class="line"><span class="bullet">- </span>shadowSetting中的shadowLight用场景gra的光设置（不用设置）</span><br><span class="line"><span class="bullet">- </span>需要验证rd使用的颜色对象与'='设置的颜色对象是否为同一个，编辑rd的bloomTint1，setting的bloomTint1是否改变</span><br><span class="line"><span class="bullet">- </span>skyBoxSetting.selected作用</span><br><span class="line"><span class="bullet">- </span>PostProcess:clone(pp)在哪里使用</span><br><span class="line"><span class="bullet">- </span>detailrange的使用</span><br><span class="line"><span class="bullet">- </span>rd的后处理中颜色对象直接改rgb没有变化，赋值才有变化</span><br><span class="line"></span><br><span class="line">待办</span><br><span class="line"><span class="bullet">- </span>目前SceneRDSetting结构大体定下了，打开场景，点左侧场景选项报错</span><br><span class="line"><span class="bullet">- </span>点击后处理报错、更换后处理应用方式，全局postProcess</span><br><span class="line"><span class="bullet">- </span>确认干掉的方法是否有用</span><br><span class="line"><span class="bullet">- </span>详细捋一遍有关默认数据和赋值相关的地方，确认表的复制和赋值没问题</span><br><span class="line"><span class="bullet">- </span>编辑器中加载修改保存各个setting相关内容测试（描边和虚光ok）</span><br><span class="line"><span class="bullet">- </span>保存markMesh</span><br><span class="line"></span><br><span class="line"><span class="section">## 4. 添加edgeSetting的元数据，跑通结构新界面（已写好）</span></span><br><span class="line">修改内容</span><br><span class="line"><span class="bullet">- </span>检查描边类的元数据模块和编辑面板模块</span><br><span class="line"><span class="bullet">- </span>把editor模块例子中用到的SceneRDSetting.lua替换为模块（从svn上删除）</span><br><span class="line"><span class="bullet">- </span>将edgesetting类相关内容移出来单独成为一个模块</span><br><span class="line"><span class="bullet">- </span>用detail结构替换</span><br><span class="line"></span><br><span class="line">问题记录</span><br><span class="line"><span class="bullet">- </span>元数据作为一个单独的文件、或者直接在edgesetting类定义模块中</span><br><span class="line"></span><br><span class="line"><span class="section">## 5. 使Editor_EdgeSetting新界面中的调整生效（可能通过扩展rd的方法）</span></span><br><span class="line">修改内容</span><br><span class="line"><span class="bullet">- </span>rd应用edgesetting对象的方法(rd:useEdgeSetting(object))</span><br><span class="line"></span><br><span class="line">问题记录</span><br><span class="line"><span class="bullet">- </span>应用之后，修改edgesetting过程中让rd的状态同时生效的方法</span><br><span class="line"></span><br><span class="line"><span class="strong">**待办**</span></span><br><span class="line"><span class="bullet">- </span>用元数据修改状态标记方式代替每一帧use（完成）</span><br><span class="line"></span><br><span class="line"><span class="section">## 6. 用新detail面板更换Editor_EdgeSetting</span></span><br><span class="line">修改内容</span><br><span class="line"><span class="bullet">- </span>写detail的例子</span><br><span class="line"></span><br><span class="line">问题记录</span><br><span class="line"><span class="bullet">- </span>setObject(nil)面板点关闭无响应，另面板是否需要另加设置隐藏显示的函数（不需要、已删除关闭按钮）</span><br><span class="line"></span><br><span class="line"><span class="section">## 7. 新detail面板加编辑器</span></span><br><span class="line">修改内容</span><br><span class="line"><span class="bullet">- </span>删除右边UI相关的代码（ui1.lua, edge.lua）</span><br><span class="line"><span class="bullet">- </span>隐藏所有界面：删除edge相关</span><br><span class="line"><span class="bullet">- </span>显示界面设置：删除edge相关</span><br><span class="line"><span class="bullet">- </span>新界面的位置和适配调整</span><br><span class="line"><span class="bullet">- </span>描边面板的位置（定位x和y，w和h与窗口的适配，右侧下面FPS的显示等）</span><br><span class="line"><span class="bullet">- </span>删除中英文和提示</span><br><span class="line"><span class="bullet">- </span>把面板相关定义放到edge外面</span><br><span class="line"></span><br><span class="line">问题记录</span><br><span class="line"><span class="bullet">- </span>添加DetailEditor界面变全黑（在viwer中重定义app函数，即在luaui等之前）</span><br><span class="line"><span class="bullet">- </span>加进去后界面上没有显示、点关闭没有反应</span><br><span class="line"><span class="bullet">- </span>加进去后：点击属性没有显示（已解决）</span><br><span class="line"><span class="bullet">- </span>点击预览没有隐藏（已解决）</span><br><span class="line"><span class="bullet">- </span>中英文FUI上的没有变化</span><br><span class="line"><span class="bullet">- </span>inputslider的显示位数限制</span><br><span class="line"><span class="bullet">- </span>detail面板定义与使用的方法（先放viewer、向单独的场景编辑器模块过渡）</span><br><span class="line"></span><br><span class="line"><span class="section">## 8.其他</span></span><br><span class="line">问题记录</span><br><span class="line"><span class="bullet">- </span>后处理的开关</span><br><span class="line"><span class="bullet">- </span>require出版问题</span><br><span class="line"></span><br><span class="line">待办</span><br><span class="line"><span class="bullet">- </span>面板的定义位置、处理显示和隐藏</span><br><span class="line"><span class="bullet">- </span>后处理、编辑因子生效</span><br><span class="line"><span class="bullet">- </span>markMesh</span><br><span class="line"><span class="bullet">- </span>修改和补全单元测试</span><br></pre></td></tr></table></figure>
+
+<h2 id="edge"><a href="#edge" class="headerlink" title="edge"></a>edge</h2><p>颜色数值的初始值不对，少两位</p>
+<p>用setting的版本，删除第一版代码</p>
+<h1 id="0906"><a href="#0906" class="headerlink" title="0906"></a>0906</h1><p>确认detail的问题</p>
+<p>修改方法</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/08/31/志于学/" rel="next" title="志于学">
+                  <i class="fa fa-chevron-left"></i> 志于学
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/09/03/table-sort方法/" rel="prev" title="lua table.sort方法">
+                  lua table.sort方法 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0902"><span class="nav-number">1.</span> <span class="nav-text">0902</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0903"><span class="nav-number">2.</span> <span class="nav-text">0903</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#marker"><span class="nav-number">2.1.</span> <span class="nav-text">marker</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0904"><span class="nav-number">3.</span> <span class="nav-text">0904</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0905"><span class="nav-number">4.</span> <span class="nav-text">0905</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#edge"><span class="nav-number">4.1.</span> <span class="nav-text">edge</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0906"><span class="nav-number">5.</span> <span class="nav-text">0906</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/touxiang.jpg"
+      alt="木可">
+  <p class="site-author-name" itemprop="name">木可</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/plainliu" title="GitHub &rarr; https://github.com/plainliu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木可</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

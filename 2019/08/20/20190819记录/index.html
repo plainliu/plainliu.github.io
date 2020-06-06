@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="0820提交一版Sample测试待办：  回放模块中添加对旧操作步骤的支持  Sample测试中加ign文件  Capture模块使用的保存路径  删除旧的Sample测试  Test_Module加超时控制、删除测试exe（集成测试再修改）  自动对比文件夹  string扩展% switch  自动测试结果自成一个文件夹，不应外面控制  把超时控制加到自动测试入口（修改e之后的时间）  超时没">
+<meta name="keywords" content="工作记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20190819记录">
+<meta property="og:url" content="http://plainliu.github.io/2019/08/20/20190819记录/index.html">
+<meta property="og:site_name" content="时习">
+<meta property="og:description" content="0820提交一版Sample测试待办：  回放模块中添加对旧操作步骤的支持  Sample测试中加ign文件  Capture模块使用的保存路径  删除旧的Sample测试  Test_Module加超时控制、删除测试exe（集成测试再修改）  自动对比文件夹  string扩展% switch  自动测试结果自成一个文件夹，不应外面控制  把超时控制加到自动测试入口（修改e之后的时间）  超时没">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1566535737036.png">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1566724273431.png">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1566725941936.png">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1566725971896.png">
+<meta property="og:updated_time" content="2019-08-26T05:50:09.213Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="20190819记录">
+<meta name="twitter:description" content="0820提交一版Sample测试待办：  回放模块中添加对旧操作步骤的支持  Sample测试中加ign文件  Capture模块使用的保存路径  删除旧的Sample测试  Test_Module加超时控制、删除测试exe（集成测试再修改）  自动对比文件夹  string扩展% switch  自动测试结果自成一个文件夹，不应外面控制  把超时控制加到自动测试入口（修改e之后的时间）  超时没">
+<meta name="twitter:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1566535737036.png">
+  <link rel="canonical" href="http://plainliu.github.io/2019/08/20/20190819记录/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>20190819记录 | 时习</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">时习</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">欲慎其终者，先追其远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://plainliu.github.io/2019/08/20/20190819记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木可">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="时习">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">20190819记录
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-20 16:03:16" itemprop="dateCreated datePublished" datetime="2019-08-20T16:03:16+08:00">2019-08-20</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-26 13:50:09" itemprop="dateModified" datetime="2019-08-26T13:50:09+08:00">2019-08-26</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="0820"><a href="#0820" class="headerlink" title="0820"></a>0820</h1><p>提交一版Sample测试</p><p>待办：</p><ul>
+<li><input checked disabled type="checkbox"> 回放模块中添加对旧操作步骤的支持</li>
+<li><input checked disabled type="checkbox"> Sample测试中加ign文件</li>
+<li><input checked disabled type="checkbox"> Capture模块使用的保存路径</li>
+<li><input checked disabled type="checkbox"> 删除旧的Sample测试</li>
+<li><input disabled type="checkbox"> Test_Module加超时控制、删除测试exe（集成测试再修改）</li>
+<li><input disabled type="checkbox"> 自动对比文件夹</li>
+<li><input disabled type="checkbox"> string扩展% switch</li>
+<li><input disabled type="checkbox"> 自动测试结果自成一个文件夹，不应外面控制</li>
+<li><input disabled type="checkbox"> 把超时控制加到自动测试入口（修改e之后的时间）</li>
+<li><input checked disabled type="checkbox"> 超时没有退出（step为nil，timer无效）</li>
+<li><input disabled type="checkbox"> 合并材质检查分支</li>
+<li><input disabled type="checkbox"> 导出测试模块在fancy-sample下测试</li>
+<li><input checked disabled type="checkbox"> 第一次设置callback后print全到了一个</li>
+<li><input disabled type="checkbox"> 在res/sample目录多生成文件夹</li>
+</ul><a id="more"></a>
+
+
+<p>回放功能单元测试</p>
+<p>测试的情况：</p>
+<ol>
+<li><p>error报错：测试error.txt</p>
+</li>
+<li><p>print：测试log.txt</p>
+</li>
+<li><p>没有lua文件：不生成结果</p>
+</li>
+<li><p>没有操作步骤：不生成结果</p>
+</li>
+<li><p>老的ops操作步骤：测试截图</p>
+</li>
+<li><p>app回调的操作步骤：测试对应步骤截图</p>
+</li>
+<li><p>msg类型的操作步骤：测试对应步骤截图</p>
+</li>
+</ol>
+<p>模块中添加结束的回调，在单元测试中回调函数执行下一个测试</p>
+<p>超时后执行enReplay</p>
+<h1 id="0822"><a href="#0822" class="headerlink" title="0822"></a>0822</h1><ul>
+<li><input disabled type="checkbox"> sample测试，对于没有oplua的直接返回（或者输出一个总信息）</li>
+<li><input checked disabled type="checkbox"> 有oplua没lua执行，输出error结果</li>
+<li><input checked disabled type="checkbox"> sample测试slave-8000ms控制，实际可能跑8000/100步</li>
+<li><input disabled type="checkbox"> 重写导出基本文件的东西，比如code</li>
+</ul>
+<p>问题：</p>
+<ul>
+<li><input disabled type="checkbox"> sample_slave：file-luafile</li>
+<li><input disabled type="checkbox"> _G.print</li>
+<li><input disabled type="checkbox"> sample测试的sample改写</li>
+<li><input disabled type="checkbox"> 查忽略文件是否被忽略</li>
+<li><input disabled type="checkbox"> toonlight</li>
+<li><input disabled type="checkbox"> 总体跑不一样，单个跑一样</li>
+</ul>
+<p>写例子</p>
+<p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1566535737036.png" alt="1566535737036"></p>
+<p>红框报错、黄色一直刷报错</p>
+<h1 id="0823"><a href="#0823" class="headerlink" title="0823"></a>0823</h1><p>增加单元测试</p>
+<p>onError下一帧捕获错误？不对</p>
+<p>调整sample的单元测试</p>
+<p>error则退出（测试可以，回放单元测试有问题）</p>
+<h1 id="0824"><a href="#0824" class="headerlink" title="0824"></a>0824</h1><p>一次error调用两次OnErrorCallback</p>
+<ol>
+<li>时间</li>
+<li>文本（这里Invoke两次）</li>
+</ol>
+<p>总共执行三次lua注册的回调函数</p>
+<p>解决回放模块error的问题</p>
+<p>添加一个保护状态</p>
+<p>state {INIT, RUNNING, END}</p>
+<p>用函数控制state，也方便在函数中添加对<strong>状态转换</strong>的控制，保证逻辑</p>
+<p>自动测试：</p>
+<p>fancy-module</p>
+<ol>
+<li>测试模块<ul>
+<li>录制模块（拖文件夹）</li>
+<li>测试模块（测试所有）</li>
+</ul>
+</li>
+<li>测试sample<ul>
+<li>录制（拖拽文件，保存在fancy-sample下面）</li>
+<li>测试（给定fancy-sample地址、两个fob地址）</li>
+</ul>
+</li>
+<li></li>
+</ol>
+<p>待办：</p>
+<ul>
+<li><input disabled type="checkbox"> 合并材质检查分支</li>
+<li><input disabled type="checkbox"> 添加测试模块的入口</li>
+<li><input disabled type="checkbox"> 整理资源检查模块</li>
+<li><input disabled type="checkbox"> 整理文件夹对比模块</li>
+<li><input disabled type="checkbox"> </li>
+</ul>
+<p>lua软渲染：</p>
+<p>二维直线，颜色渐变</p>
+<p>孔子学生统计</p>
+<p>称呼、姓、名、字、国、年龄+</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>问问题过程：不敢问-问-不知问什么-思考真正的问题-问</p>
+<p>首先知道自己要问的是什么</p>
+<p>做东西，先有方案，初步的执行步骤，找人碰方案</p>
+<p>确认没有问题再继续</p>
+<p>给出建议，不要直接点头或接受，先明白是为什么，如果不明白，先问清楚为什么这么做。</p>
+<p>注意把控自己代码的质量，认真去做</p>
+<p>有时间观念</p>
+<p>平白多干几个小时，其实没有什么进度</p>
+<h1 id="周日-0825"><a href="#周日-0825" class="headerlink" title="周日 0825"></a>周日 0825</h1><p>待办：</p>
+<ol>
+<li>搞定github博客框架改动</li>
+<li>本地记录的博客调整好（框架、主题、文章结构）</li>
+<li>论语别裁一看完</li>
+<li>lua软渲染</li>
+<li>写周报</li>
+</ol>
+<p>搭建遇到的问题：</p>
+<ol start="4">
+<li><p>git中可以直接加如子项目</p>
+<p>即git仓库可以嵌套</p>
+<p>相当于在项目中包含了一个子模块的版本控制指针，项目中实际上并没有这个内容</p>
+<p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1566724273431.png" alt="1566724273431"></p>
+<p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1566725941936.png" alt="1566725941936"></p>
+<p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1566725971896.png" alt="1566725971896"></p>
+</li>
+<li></li>
+</ol>
+<p>预算：</p>
+<p>耳机200</p>
+<p>六七七100</p>
+<p>9月预算：</p>
+<p>请平凉小朋友吃饭500</p>
+<p>房租4000</p>
+<p>吃饭1500</p>
+<p>茹：吃饭</p>
+<p>保险1000</p>
+<p>电脑</p>
+<p>surface go（ipad）</p>
+<p>远程</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/工作记录/" rel="tag"># 工作记录</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/08/16/20190812记录/" rel="next" title="20190812记录">
+                  <i class="fa fa-chevron-left"></i> 20190812记录
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/08/25/Hexo-Github-搭建博客/" rel="prev" title="Hexo + Github 搭建博客">
+                  Hexo + Github 搭建博客 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0820"><span class="nav-number">1.</span> <span class="nav-text">0820</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0822"><span class="nav-number">2.</span> <span class="nav-text">0822</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0823"><span class="nav-number">3.</span> <span class="nav-text">0823</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0824"><span class="nav-number">4.</span> <span class="nav-text">0824</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#周日-0825"><span class="nav-number">6.</span> <span class="nav-text">周日 0825</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/touxiang.jpg"
+      alt="木可">
+  <p class="site-author-name" itemprop="name">木可</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/plainliu" title="GitHub &rarr; https://github.com/plainliu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木可</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

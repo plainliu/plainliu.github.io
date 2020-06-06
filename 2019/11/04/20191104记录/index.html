@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="万恶的蓝屏，本周的记录清空了，周四回忆式记录，愤怒而淡定重写，决定每天push到github仓库 本周  reportUsage音频内存信息打印  资源检查工具改进  修改项目打包job 打包工具  老打包工具的bug，ignoreimage不正确  自动打包脚本co有中断的问题 自动化  例子测试系统弹窗的问题  不稳定例子  每日测试单元测试出错后报告不准确  每日测试单元测试出现网络验证失">
+<meta name="keywords" content="记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20191104记录">
+<meta property="og:url" content="http://plainliu.github.io/2019/11/04/20191104记录/index.html">
+<meta property="og:site_name" content="时习">
+<meta property="og:description" content="万恶的蓝屏，本周的记录清空了，周四回忆式记录，愤怒而淡定重写，决定每天push到github仓库 本周  reportUsage音频内存信息打印  资源检查工具改进  修改项目打包job 打包工具  老打包工具的bug，ignoreimage不正确  自动打包脚本co有中断的问题 自动化  例子测试系统弹窗的问题  不稳定例子  每日测试单元测试出错后报告不准确  每日测试单元测试出现网络验证失">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-12-17T12:41:20.814Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="20191104记录">
+<meta name="twitter:description" content="万恶的蓝屏，本周的记录清空了，周四回忆式记录，愤怒而淡定重写，决定每天push到github仓库 本周  reportUsage音频内存信息打印  资源检查工具改进  修改项目打包job 打包工具  老打包工具的bug，ignoreimage不正确  自动打包脚本co有中断的问题 自动化  例子测试系统弹窗的问题  不稳定例子  每日测试单元测试出错后报告不准确  每日测试单元测试出现网络验证失">
+  <link rel="canonical" href="http://plainliu.github.io/2019/11/04/20191104记录/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>20191104记录 | 时习</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">时习</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">欲慎其终者，先追其远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://plainliu.github.io/2019/11/04/20191104记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木可">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="时习">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">20191104记录
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-04 10:43:00" itemprop="dateCreated datePublished" datetime="2019-11-04T10:43:00+08:00">2019-11-04</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-17 20:41:20" itemprop="dateModified" datetime="2019-12-17T20:41:20+08:00">2019-12-17</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>万恶的蓝屏，本周的记录清空了，周四回忆式记录，愤怒而淡定重写，决定每天push到github仓库</p>
+</blockquote><p><strong>本周</strong></p><ul>
+<li><input checked disabled type="checkbox"> reportUsage音频内存信息打印</li>
+<li><input disabled type="checkbox"> 资源检查工具改进</li>
+<li><input disabled type="checkbox"> 修改项目打包job</li>
+</ul><p><strong>打包工具</strong></p><ul>
+<li><input disabled type="checkbox"> 老打包工具的bug，ignoreimage不正确</li>
+<li><input disabled type="checkbox"> 自动打包脚本co有中断的问题</li>
+</ul><p><strong>自动化</strong></p><ul>
+<li><input disabled type="checkbox"> 例子测试系统弹窗的问题</li>
+<li><input disabled type="checkbox"> 不稳定例子</li>
+<li><input disabled type="checkbox"> 每日测试单元测试出错后报告不准确</li>
+<li><input disabled type="checkbox"> 每日测试单元测试出现网络验证失败</li>
+<li><input disabled type="checkbox"> 压缩截图（无损压缩）（继续找更高效的方式）</li>
+<li><input disabled type="checkbox"> 有SD leak，可以体现在log中，error：sound3D.lua</li>
+<li><input disabled type="checkbox"> 几个每日测试的WT</li>
+<li><input disabled type="checkbox"> sample测试老工具崩溃</li>
+<li><input disabled type="checkbox"> 把1和2改成old和new</li>
+<li><input checked disabled type="checkbox"> 加屏蔽例子</li>
+<li><input disabled type="checkbox"> 14948的打印、1026的大量不一样、1017</li>
+</ul><a id="more"></a>
+
+
+
+
+
+
+<p><strong>其他</strong></p>
+<ul>
+<li><input disabled type="checkbox"> 电脑蓝屏的问题</li>
+<li><input disabled type="checkbox"> 自定义特效转换脚本，转换自定义地表特效后续与胖哥讨论</li>
+<li><input disabled type="checkbox"> 自定义特效的转换，转换后法线消失。</li>
+<li><input disabled type="checkbox"> ambient的复制问题</li>
+<li><input disabled type="checkbox"> 整理打包工具检查alpha通道的代码</li>
+<li><input disabled type="checkbox"> 旧的导出功能问题（导出特效编辑器）</li>
+<li><input disabled type="checkbox"> 几个编辑器拷贝postlua的删除</li>
+<li><input disabled type="checkbox"> 写周报</li>
+</ul>
+<h1 id="1104"><a href="#1104" class="headerlink" title="1104"></a>1104</h1><h2 id="添加reportUsage音频打印"><a href="#添加reportUsage音频打印" class="headerlink" title="添加reportUsage音频打印"></a>添加reportUsage音频打印</h2><p>_FANCY_DEVELOP_VERSION宏</p>
+<p>统计播放过程中的音频占用内存</p>
+<p>fmod声音引擎文档查找</p>
+<p>为true打印每个声音的尺寸</p>
+<h2 id="资源检查工具任务安排"><a href="#资源检查工具任务安排" class="headerlink" title="资源检查工具任务安排"></a>资源检查工具任务安排</h2><h3 id="模型相关"><a href="#模型相关" class="headerlink" title="模型相关"></a>模型相关</h3><ol>
+<li>PVS合并 拆开之后所有的都是子模型 关注的是 每一个子模型的数据</li>
+<li>PVS合并，之前的逻辑，node一样的话才能合并。 每一个node里的模型的数据</li>
+</ol>
+<p><strong>1. mesh（用PVS可以忽略这项数据）</strong></p>
+<p>msh文件不超过50KB，把D、P、顶点的长度<br>(vertexBuffer)、数量，索引的长度(indexBuffer)和数量给出来</p>
+<p><strong>2. submesh（用PVS合并的检查此项数据）</strong></p>
+<p>模型(子模型) ： 顶点的长度<br>(vertexBuffer)、数量，索引的长度(indexBuffer)和数量</p>
+<p><strong>3. skn</strong></p>
+<p>skn文件不超过75KB  skn 不用拆子模型，因为它不参与合并<br>D、P、Format、(vertexBuffer)、数量，索引的长度(indexBuffer)和数量</p>
+<p><strong>4. 其他</strong></p>
+<p>标准：skn模型的D值不超过2；msh模型的D值不超过3，注释掉这个检查</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ol>
+<li><p>skl文件的骨骼数量改动为66</p>
+<p>shader数组定义最多有256个，其中除去光等的占用，剩余每个骨骼占用3个（开启GpuSkinning），最多66个</p>
+</li>
+<li><p>屏蔽掉 标准：图片格式应为BMP-24或TGA-32 这个检查</p>
+</li>
+<li><p>pfx自定义特效的打印有连续空行空行</p>
+</li>
+<li><p>资源合规检查中缺失资源中的烘焙文件的检查 根据scene_rd_setting来看是bake 还是lightmass</p>
+</li>
+</ol>
+<h1 id="1105"><a href="#1105" class="headerlink" title="1105"></a>1105</h1><h2 id="资源检查工具"><a href="#资源检查工具" class="headerlink" title="资源检查工具"></a>资源检查工具</h2><p>记录</p>
+<h2 id="ASTC分支的检查"><a href="#ASTC分支的检查" class="headerlink" title="ASTC分支的检查"></a>ASTC分支的检查</h2><p>update到最新就没问题了</p>
+<h2 id="项目打包job修改讨论"><a href="#项目打包job修改讨论" class="headerlink" title="项目打包job修改讨论"></a>项目打包job修改讨论</h2><p>记录</p>
+<h1 id="1106"><a href="#1106" class="headerlink" title="1106"></a>1106</h1><h2 id="资源检查工具-1"><a href="#资源检查工具-1" class="headerlink" title="资源检查工具"></a>资源检查工具</h2><p>记录</p>
+<h1 id="1107"><a href="#1107" class="headerlink" title="1107"></a>1107</h1><h2 id="资源检查工具-2"><a href="#资源检查工具-2" class="headerlink" title="资源检查工具"></a>资源检查工具</h2><p>提交烘焙相关的资源缺失检查</p>
+<p>修改引擎接口和提交模块化内容</p>
+<p>记录</p>
+<p>烘焙：分支引擎崩溃</p>
+<h3 id="模型相关改进"><a href="#模型相关改进" class="headerlink" title="模型相关改进"></a>模型相关改进</h3><p>取消普通模型msh的D值检查</p>
+<h2 id="项目出版job第二版"><a href="#项目出版job第二版" class="headerlink" title="项目出版job第二版"></a>项目出版job第二版</h2><p>给项目分支地址和module地址</p>
+<h2 id="修改自定义特效转换工具"><a href="#修改自定义特效转换工具" class="headerlink" title="修改自定义特效转换工具"></a>修改自定义特效转换工具</h2><p>带法线的自定义模型特效不转换</p>
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><p>重写本周记录，新建github仓库，push</p>
+<p>今天的测试结果</p>
+<h1 id="1108"><a href="#1108" class="headerlink" title="1108"></a>1108</h1><h2 id="资源检查工具-3"><a href="#资源检查工具-3" class="headerlink" title="资源检查工具"></a>资源检查工具</h2><p><strong>烘焙贴图缺失资源检查</strong></p>
+<p>整理代码（先提交），补充和检查单元测试（先注释提交，或引擎分支合并到主干后出fs引擎再提交）</p>
+<p><strong>检查模型相关</strong></p>
+<p>整理接下来的模型检查设计和修改方案</p>
+<h2 id="转换自定义特效的脚本"><a href="#转换自定义特效的脚本" class="headerlink" title="转换自定义特效的脚本"></a>转换自定义特效的脚本</h2><p>修改并提交</p>
+<ul>
+<li>问题：</li>
+<li>代码逻辑不清晰</li>
+</ul>
+<h2 id="缩减自定义特效代码长度"><a href="#缩减自定义特效代码长度" class="headerlink" title="*缩减自定义特效代码长度"></a>*缩减自定义特效代码长度</h2><p>看编辑器实现</p>
+<p>提取代码</p>
+<p>写转换脚本和给项目的代码</p>
+<p><strong>方案</strong></p>
+<ul>
+<li><p>写例子，把特效转换和拆分，保证效果不变</p>
+<p>转换模型</p>
+<ul>
+<li>取老的信息，拼接新的代码信息</li>
+<li>具体的代码过程写到文件中</li>
+<li>以测试资源为例，开始拆分</li>
+</ul>
+</li>
+<li><p>针对不同的自定义类型区分处理方式</p>
+</li>
+</ul>
+<p><strong>转换流程</strong></p>
+<ol>
+<li><p>解析</p>
+<p>使用编辑器的解析方式解析原本的代码</p>
+<p>拿到参数后给自定义特效分类，以确认生成什么样的新代码</p>
+</li>
+<li><p>缩减代码</p>
+<p>生成新的自定义代码</p>
+<ul>
+<li><p>定义<code>local resMesh = &#39;...&#39;</code></p>
+</li>
+<li><p>传参</p>
+<p>set方法设置，在脚本代码中赋值和操作</p>
+</li>
+<li><p>设置回调函数</p>
+</li>
+</ul>
+</li>
+<li><p>保存特效</p>
+</li>
+<li><p>运行</p>
+<p>把各个执行函数提取到单独的脚本中</p>
+<p>以期在新的自定义代码中调用这些方法</p>
+</li>
+</ol>
+<p><strong>最终的效果</strong></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> version = <span class="number">1</span></span><br><span class="line"><span class="keyword">local</span> pfxEmitter = _loadingRes</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Terrain/Mesh/Light Params</span></span><br><span class="line"><span class="keyword">local</span> resMesh = <span class="string">''</span></span><br><span class="line">...</span><br><span class="line">pfxEmitter:setMeshParams(resMesh, ...)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Dissolve Params</span></span><br><span class="line"><span class="keyword">local</span> dissolve = <span class="literal">true</span></span><br><span class="line">...</span><br><span class="line">pfxEmitter:setDissolveParams()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Set Callback</span></span><br><span class="line">pfxEmitter:onCreate(_ParticleEmitter.onCreateMeshFunc)</span><br><span class="line">pfxEmitter:onDestroy(_ParticleEmitter.onDestroyMeshFunc)</span><br><span class="line">pfxEmitter:onRender(_ParticleEmitter.onRenderFunc)</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用</strong></p>
+<p>先缩减自定义代码，如果优化可观，则可不用转换成普通特效了</p>
+<p>以上第一版</p>
+<p>讨论后第二版</p>
+<p><strong>方案二</strong></p>
+<p>在打包的时候去做的处理</p>
+<p>这样不必考虑后期开发的可读性</p>
+<p>用索引和值生成表，之后传入函数，dostring这个字符串</p>
+<p>尽量缩减字符串长度</p>
+<h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h2><p>查看昨天和今天测试的结果</p>
+<p>处理16上的无效结果</p>
+<ul>
+<li>屏蔽两个异步加载的例子</li>
+<li>删除近几天无效的结果</li>
+</ul>
+<h1 id="1109"><a href="#1109" class="headerlink" title="1109"></a>1109</h1><h2 id="缩减自定义特效代码长度-1"><a href="#缩减自定义特效代码长度-1" class="headerlink" title="缩减自定义特效代码长度"></a>缩减自定义特效代码长度</h2><p><strong>方案二</strong></p>
+<p>目的：尽最大程度缩减代码长度</p>
+<p>在打包前做一次处理，然后对应的脚本</p>
+<p><strong>最终效果</strong></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> pe = _loadingRes</span><br><span class="line">pe:udFunc(&#123;[<span class="number">1</span>] = <span class="string">'xxx'</span>, [<span class="number">2</span>] = <span class="string">'xxx'</span>, [<span class="number">3</span>] = ...&#125;) <span class="comment">-- 加[]比较长，且达到10后占两个字符，可再去掉空格，去掉小括号</span></span><br><span class="line">pe:udFunc(&#123;a = <span class="string">'xxx'</span>, b = <span class="string">'xxx'</span>, c = ...&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>进一步缩减</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 保存内容</span></span><br><span class="line">_loadingRes:udFunc&#123;a=<span class="string">'xxx'</span>,b=<span class="string">'xxx'</span>,c=...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于ud函数，传入的参数是一个表</p>
+<p>函数中再做对应的处理，重写onCreate等函数</p>
+<p><strong>实现</strong></p>
+<ul>
+<li>列举所有参数，并定义参数保存在自定义代码中的key</li>
+<li>转换特效，替换自定义代码</li>
+<li>解析新代码（需要预加载的脚本）</li>
+</ul>
+<p><strong>调整</strong></p>
+<p>两种自定义特效的转换（转成普通特效/缩减自定义代码长度）放在一个模块下</p>
+<p><strong>测试</strong></p>
+<p>用自动化测试资源的工具</p>
+<p>用同一版引擎，测试转换前后两个文件夹的特效进行对比</p>
+<p>注意：</p>
+<ul>
+<li>修改resource检查入口文件</li>
+<li>需要dofile新脚本</li>
+<li>检查中间删除文件夹的操作，不要误删第一次检查的结果</li>
+<li>特效加terrain</li>
+</ul>
+<p><strong>问题记录</strong></p>
+<ul>
+<li>需要有个标记来记录是哪一种特效</li>
+<li>dissolvesize保留小数4位</li>
+<li>pi.dissolve是什么参数，从哪里拿到的</li>
+</ul>
+<h2 id="自动化测试-1"><a href="#自动化测试-1" class="headerlink" title="自动化测试"></a>自动化测试</h2><p>当天问题：</p>
+<p>昨天添加了屏蔽的例子，今天继续出现了</p>
+<p>原因：</p>
+<p>测试机10.1.16.131上没有更新的权限，可能有几天没更新了</p>
+<p>处理：</p>
+<p>先登录我的账号，查看当前module和sample资源的版本号</p>
+<p>看是否再次测试</p>
+<p>首先代码检查和模块单元测试需要再次测试，因为本身检查的是模块内容</p>
+<p>sample不用测试，每天的引擎出版正常，影响只是例子没更新</p>
+<p>结论：</p>
+<p>看版本sample在最新，module只差昨天晚上屏蔽的提交，对测试没有影响，均无需重新测试</p>
+<h1 id="1110"><a href="#1110" class="headerlink" title="1110"></a>1110</h1><h2 id="缩减特效自定义代码"><a href="#缩减特效自定义代码" class="headerlink" title="缩减特效自定义代码"></a>缩减特效自定义代码</h2><p>问题记录：</p>
+<ol>
+<li>特效用编辑器打开，没有显示各个参数（保存之后有老代码？可能没有保存下来新的代码）</li>
+<li>版本11935删除了</li>
+</ol>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i, man <span class="keyword">in</span> <span class="built_in">ipairs</span>(<span class="built_in">pi</span>.userMesh:getAnimas()) <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> man.loop <span class="keyword">or</span> <span class="built_in">pi</span>.tick &lt;= man.duration <span class="keyword">then</span></span><br><span class="line">        man.current = <span class="built_in">pi</span>.tick</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">pi</span>.userMesh.skeleton <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">for</span> i, san <span class="keyword">in</span> <span class="built_in">ipairs</span>(<span class="built_in">pi</span>.userMesh.skeleton:getAnimas()) <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> san.loop <span class="keyword">or</span> <span class="built_in">pi</span>.tick &lt;= san.duration <span class="keyword">then</span></span><br><span class="line">            san.current = <span class="built_in">pi</span>.tick</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>在自定义代码中，把这里加回来，对比加载老特效的时候报错</p>
+<h1 id="其他记录"><a href="#其他记录" class="headerlink" title="其他记录"></a>其他记录</h1><ul>
+<li><input disabled type="checkbox"> 资源检查工具的config不太好，子模块于大模块不独立，config去设置子模块参数而不是定义子模块参数</li>
+</ul>
+<h2 id="记录Nsight使用"><a href="#记录Nsight使用" class="headerlink" title="记录Nsight使用"></a>记录Nsight使用</h2><p>待办：</p>
+<p>看保险配置</p>
+<p>闲置、双11</p>
+<p>备注：</p>
+<p>anaconda</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/记录/" rel="tag"># 记录</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/28/20191028记录/" rel="next" title="20191028记录">
+                  <i class="fa fa-chevron-left"></i> 20191028记录
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/11/07/20190512周总结/" rel="prev" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1104"><span class="nav-number">1.</span> <span class="nav-text">1104</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加reportUsage音频打印"><span class="nav-number">1.1.</span> <span class="nav-text">添加reportUsage音频打印</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源检查工具任务安排"><span class="nav-number">1.2.</span> <span class="nav-text">资源检查工具任务安排</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型相关"><span class="nav-number">1.2.1.</span> <span class="nav-text">模型相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.2.2.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1105"><span class="nav-number">2.</span> <span class="nav-text">1105</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#资源检查工具"><span class="nav-number">2.1.</span> <span class="nav-text">资源检查工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASTC分支的检查"><span class="nav-number">2.2.</span> <span class="nav-text">ASTC分支的检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目打包job修改讨论"><span class="nav-number">2.3.</span> <span class="nav-text">项目打包job修改讨论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1106"><span class="nav-number">3.</span> <span class="nav-text">1106</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#资源检查工具-1"><span class="nav-number">3.1.</span> <span class="nav-text">资源检查工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1107"><span class="nav-number">4.</span> <span class="nav-text">1107</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#资源检查工具-2"><span class="nav-number">4.1.</span> <span class="nav-text">资源检查工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型相关改进"><span class="nav-number">4.1.1.</span> <span class="nav-text">模型相关改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目出版job第二版"><span class="nav-number">4.2.</span> <span class="nav-text">项目出版job第二版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改自定义特效转换工具"><span class="nav-number">4.3.</span> <span class="nav-text">修改自定义特效转换工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他-1"><span class="nav-number">4.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1108"><span class="nav-number">5.</span> <span class="nav-text">1108</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#资源检查工具-3"><span class="nav-number">5.1.</span> <span class="nav-text">资源检查工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转换自定义特效的脚本"><span class="nav-number">5.2.</span> <span class="nav-text">转换自定义特效的脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缩减自定义特效代码长度"><span class="nav-number">5.3.</span> <span class="nav-text">*缩减自定义特效代码长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化测试"><span class="nav-number">5.4.</span> <span class="nav-text">自动化测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1109"><span class="nav-number">6.</span> <span class="nav-text">1109</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缩减自定义特效代码长度-1"><span class="nav-number">6.1.</span> <span class="nav-text">缩减自定义特效代码长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化测试-1"><span class="nav-number">6.2.</span> <span class="nav-text">自动化测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1110"><span class="nav-number">7.</span> <span class="nav-text">1110</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缩减特效自定义代码"><span class="nav-number">7.1.</span> <span class="nav-text">缩减特效自定义代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他记录"><span class="nav-number">8.</span> <span class="nav-text">其他记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#记录Nsight使用"><span class="nav-number">8.1.</span> <span class="nav-text">记录Nsight使用</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/touxiang.jpg"
+      alt="木可">
+  <p class="site-author-name" itemprop="name">木可</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/plainliu" title="GitHub &rarr; https://github.com/plainliu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木可</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

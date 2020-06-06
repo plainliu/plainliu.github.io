@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="本周  自定义特效转换工具  资源检查工具改进  摘出来检查特效的检查工具  新烘焙介绍 打包工具  老打包工具的bug，ignoreimage不正确  自动打包脚本co有中断的问题 自动化  例子测试系统弹窗的问题  不稳定例子  每日测试单元测试出错后报告不准确  每日测试单元测试出现网络验证失败  压缩截图（无损压缩）（继续找更高效的方式）  有SD leak，可以体现在log中，error">
+<meta name="keywords" content="记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20191111记录">
+<meta property="og:url" content="http://plainliu.github.io/2019/11/11/20191111记录/index.html">
+<meta property="og:site_name" content="时习">
+<meta property="og:description" content="本周  自定义特效转换工具  资源检查工具改进  摘出来检查特效的检查工具  新烘焙介绍 打包工具  老打包工具的bug，ignoreimage不正确  自动打包脚本co有中断的问题 自动化  例子测试系统弹窗的问题  不稳定例子  每日测试单元测试出错后报告不准确  每日测试单元测试出现网络验证失败  压缩截图（无损压缩）（继续找更高效的方式）  有SD leak，可以体现在log中，error">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1573890051641.png">
+<meta property="og:updated_time" content="2019-11-16T07:40:57.550Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="20191111记录">
+<meta name="twitter:description" content="本周  自定义特效转换工具  资源检查工具改进  摘出来检查特效的检查工具  新烘焙介绍 打包工具  老打包工具的bug，ignoreimage不正确  自动打包脚本co有中断的问题 自动化  例子测试系统弹窗的问题  不稳定例子  每日测试单元测试出错后报告不准确  每日测试单元测试出现网络验证失败  压缩截图（无损压缩）（继续找更高效的方式）  有SD leak，可以体现在log中，error">
+<meta name="twitter:image" content="c:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1573890051641.png">
+  <link rel="canonical" href="http://plainliu.github.io/2019/11/11/20191111记录/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>20191111记录 | 时习</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">时习</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">欲慎其终者，先追其远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://plainliu.github.io/2019/11/11/20191111记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木可">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="时习">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">20191111记录
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-11 10:43:00" itemprop="dateCreated datePublished" datetime="2019-11-11T10:43:00+08:00">2019-11-11</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-16 15:40:57" itemprop="dateModified" datetime="2019-11-16T15:40:57+08:00">2019-11-16</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>本周</strong></p><ul>
+<li><input checked disabled type="checkbox"> 自定义特效转换工具</li>
+<li><input checked disabled type="checkbox"> 资源检查工具改进</li>
+<li><input checked disabled type="checkbox"> 摘出来检查特效的检查工具</li>
+<li><input disabled type="checkbox"> 新烘焙介绍</li>
+</ul><p><strong>打包工具</strong></p><ul>
+<li><input disabled type="checkbox"> 老打包工具的bug，ignoreimage不正确</li>
+<li><input disabled type="checkbox"> 自动打包脚本co有中断的问题</li>
+</ul><p><strong>自动化</strong></p><ul>
+<li><input disabled type="checkbox"> 例子测试系统弹窗的问题</li>
+<li><input disabled type="checkbox"> 不稳定例子</li>
+<li><input disabled type="checkbox"> 每日测试单元测试出错后报告不准确</li>
+<li><input disabled type="checkbox"> 每日测试单元测试出现网络验证失败</li>
+<li><input disabled type="checkbox"> 压缩截图（无损压缩）（继续找更高效的方式）</li>
+<li><input disabled type="checkbox"> 有SD leak，可以体现在log中，error：sound3D.lua</li>
+<li><input disabled type="checkbox"> 几个每日测试的WT</li>
+<li><input disabled type="checkbox"> sample测试老工具崩溃</li>
+<li><input disabled type="checkbox"> 把1和2改成old和new</li>
+<li><input checked disabled type="checkbox"> 加屏蔽例子</li>
+<li><input disabled type="checkbox"> 14948的打印、1026的大量不一样、1017</li>
+</ul><a id="more"></a>
+
+
+
+
+
+<p><strong>其他</strong></p>
+<ul>
+<li><input disabled type="checkbox"> 电脑蓝屏的问题</li>
+<li><input disabled type="checkbox"> 自定义特效转换脚本，转换自定义地表特效后续与胖哥讨论</li>
+<li><input disabled type="checkbox"> 自定义特效的转换，转换后法线消失。</li>
+<li><input disabled type="checkbox"> ambient的复制问题</li>
+<li><input disabled type="checkbox"> 整理打包工具检查alpha通道的代码</li>
+<li><input disabled type="checkbox"> 旧的导出功能问题（导出特效编辑器）</li>
+<li><input disabled type="checkbox"> 几个编辑器拷贝postlua的删除</li>
+<li><input disabled type="checkbox"> 写周报</li>
+</ul>
+<h1 id="资源检查工具任务安排"><a href="#资源检查工具任务安排" class="headerlink" title="资源检查工具任务安排"></a>资源检查工具任务安排</h1><h2 id="模型相关"><a href="#模型相关" class="headerlink" title="模型相关"></a>模型相关</h2><ol>
+<li>PVS合并 拆开之后所有的都是子模型 关注的是 每一个子模型的数据</li>
+<li>PVS合并，之前的逻辑，node一样的话才能合并。 每一个node里的模型的数据</li>
+</ol>
+<p><strong>1. mesh（用PVS可以忽略这项数据）</strong></p>
+<p>msh文件不超过50KB，把D、P、顶点的长度<br>(vertexBuffer)、数量，索引的长度(indexBuffer)和数量给出来</p>
+<p><strong>2. submesh（用PVS合并的检查此项数据）</strong></p>
+<p>模型(子模型) ： 顶点的长度<br>(vertexBuffer)、数量，索引的长度(indexBuffer)和数量</p>
+<p><strong>3. skn</strong></p>
+<p>skn文件不超过75KB  skn 不用拆子模型，因为它不参与合并<br>D、P、Format、(vertexBuffer)、数量，索引的长度(indexBuffer)和数量</p>
+<p><strong>4. 其他</strong></p>
+<p>标准：skn模型的D值不超过2；msh模型的D值不超过3，注释掉这个检查</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
+<li><p>skl文件的骨骼数量改动为66</p>
+<p>shader数组定义最多有256个，其中除去光等的占用，剩余每个骨骼占用3个（开启GpuSkinning），最多66个</p>
+</li>
+<li><p>屏蔽掉 标准：图片格式应为BMP-24或TGA-32 这个检查</p>
+</li>
+<li><p>pfx自定义特效的打印有连续空行空行</p>
+</li>
+<li><p>资源合规检查中缺失资源中的烘焙文件的检查 根据scene_rd_setting来看是bake 还是lightmass</p>
+</li>
+</ol>
+<h1 id="1111"><a href="#1111" class="headerlink" title="1111"></a>1111</h1><p>创建分支</p>
+<h2 id="特效转换成普通特效，带法线的不转换"><a href="#特效转换成普通特效，带法线的不转换" class="headerlink" title="特效转换成普通特效，带法线的不转换"></a>特效转换成普通特效，带法线的不转换</h2><p>补全单元测试</p>
+<p>第一版提交到分支，后期修改</p>
+<p>接下来重构分成单个的子模块</p>
+<p>拆成：</p>
+<ol>
+<li>处理自定义代码得到基本参数子模块；</li>
+<li>转换自定义为普通特效子模块；</li>
+<li>转换缩减自定义代码子模块。</li>
+</ol>
+<h2 id="缩减特效自定义代码"><a href="#缩减特效自定义代码" class="headerlink" title="缩减特效自定义代码"></a>缩减特效自定义代码</h2><p>问题记录：</p>
+<ul>
+<li>删除代码</li>
+</ul>
+<ol>
+<li>特效用编辑器打开，没有显示各个参数（保存之后有老代码？可能没有保存下来新的代码）</li>
+<li>版本11935删除了</li>
+</ol>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i, man <span class="keyword">in</span> <span class="built_in">ipairs</span>(<span class="built_in">pi</span>.userMesh:getAnimas()) <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> man.loop <span class="keyword">or</span> <span class="built_in">pi</span>.tick &lt;= man.duration <span class="keyword">then</span></span><br><span class="line">        man.current = <span class="built_in">pi</span>.tick</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">pi</span>.userMesh.skeleton <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">for</span> i, san <span class="keyword">in</span> <span class="built_in">ipairs</span>(<span class="built_in">pi</span>.userMesh.skeleton:getAnimas()) <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> san.loop <span class="keyword">or</span> <span class="built_in">pi</span>.tick &lt;= san.duration <span class="keyword">then</span></span><br><span class="line">            san.current = <span class="built_in">pi</span>.tick</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>在自定义代码中，把这里加回来，对比加载老特效的时候报错</p>
+<ul>
+<li>在特效制作之后编辑器添加代码</li>
+</ul>
+<h1 id="1112"><a href="#1112" class="headerlink" title="1112"></a>1112</h1><p>自定义特效转换工具</p>
+<p><strong>提取自定义代码</strong></p>
+<p>测试：28/840</p>
+<p>区分新老特效：17/28</p>
+<p>重新调用save保存：7/17</p>
+<p>增加了tick代码4/7</p>
+<p>需要重新保存并制作的特效1/3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;kog_zy_new_boss_yemu_jixie_skill05_paodan.pfx&apos;,</span><br><span class="line">&apos;kog_zy_cha_nan_td_1_skill03_01_p_03_02.pfx&apos;,</span><br></pre></td></tr></table></figure>
+
+<p>原因</p>
+<p>enumMesh设置material</p>
+<p>总体测试结果</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 添加代码tick,实际没有影响</span></span><br><span class="line"><span class="string">'kog_zlq_mon_xueshou_002_skill01_01.pfx'</span>,</span><br><span class="line"><span class="string">'kog_zlq_nv_dun_skill04_02f_01.pfx'</span>,</span><br><span class="line"><span class="string">'kog_zlq_pet_jn_02.pfx'</span>,</span><br><span class="line"><span class="string">'pfx_mon_xueshou_002_skill03.pfx'</span>,</span><br><span class="line"><span class="comment">-- 区别不大</span></span><br><span class="line"><span class="string">'kog_zy_mon_xinshouboss_001_skill03_02_03.pfx'</span>,</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 新的报错少skl,skn，图片一样,调用pfx的save方法保存后没有问题了</span></span><br><span class="line"><span class="string">'kog_zlq_huan_lp02_skill01_cheng_01.pfx'</span>,</span><br><span class="line"><span class="string">'kog_zlq_huan_lp02_skill01_hong_01.pfx'</span>,</span><br><span class="line"><span class="string">'kog_zlq_huan_lp03_skill01_cheng_01'</span>,</span><br><span class="line"><span class="string">'kog_zlq_huan_lp03_skill01_hong_01'</span>,</span><br><span class="line"><span class="string">'kog_zlq_mon_gongchengji_001_die.pfx'</span>,</span><br><span class="line"><span class="string">'kog_zlq_mon_jjxg_die_01.pfx'</span>,</span><br><span class="line"><span class="string">'kog_zlq_npc_nvjunguan_001_skill01_01.pfx'</span>,</span><br><span class="line"><span class="string">'low_kog_zlq_huan_lp02_skill01_cheng_01.pfx'</span>,</span><br><span class="line"><span class="string">'low_kog_zlq_huan_lp02_skill01_hong_01.pfx'</span>,</span><br><span class="line"><span class="string">'pfx_pet_ioc_007_emo.pfx'</span>,</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 图片区别大,添加代码enumMesh导致，需要用编辑器重新保存后看效果再修改</span></span><br><span class="line"><span class="string">'kog_zy_new_boss_yemu_jixie_skill05_paodan.pfx'</span>,</span><br><span class="line"><span class="string">'kog_zy_cha_nan_td_1_skill03_01_p_03_02.pfx'</span>,</span><br></pre></td></tr></table></figure>
+
+<h1 id="1113"><a href="#1113" class="headerlink" title="1113"></a>1113</h1><ul>
+<li><input checked disabled type="checkbox"> review分支自定义特效转换的代码</li>
+<li><input disabled type="checkbox"> 测试转换成普通模型的工具</li>
+<li><input disabled type="checkbox"> 调整带法线的忽略代码</li>
+<li><input disabled type="checkbox"> 资源检查工具特效加地表</li>
+<li><input checked disabled type="checkbox"> 整理资源检查工具的方案，继续资源检查工具</li>
+</ul>
+<h2 id="自定义特效转换工具"><a href="#自定义特效转换工具" class="headerlink" title="自定义特效转换工具"></a>自定义特效转换工具</h2><p>问题记录：</p>
+<ol>
+<li>Resource_Toolkit的单元测试有两个<code>do return end</code></li>
+<li>使用自动测试资源工具对比转成普通模型特效后的效果</li>
+<li>带法线的自定义模型不转换代码需要调整</li>
+</ol>
+<h2 id="资源检查工具"><a href="#资源检查工具" class="headerlink" title="资源检查工具"></a>资源检查工具</h2><ol>
+<li><p>取消普通模型msh的D值检查</p>
+<p>已提交在主干</p>
+</li>
+<li><p>烘焙资源检查</p>
+<p>提交在分支，尚未合并到主干</p>
+</li>
+</ol>
+<h3 id="模型相关改进"><a href="#模型相关改进" class="headerlink" title="模型相关改进"></a>模型相关改进</h3><p>msh</p>
+<ol>
+<li><p>size</p>
+<p>size， msh name</p>
+</li>
+<li><p>P/D</p>
+<p>P， D， P/D，mesh name</p>
+</li>
+<li><p>vertexBuffer等</p>
+<p>多标准，mesh name</p>
+</li>
+</ol>
+<p>subMesh</p>
+<h2 id="资源检查工具-1"><a href="#资源检查工具-1" class="headerlink" title="资源检查工具"></a>资源检查工具</h2><p><strong>烘焙贴图缺失资源检查</strong></p>
+<p>整理代码（先提交），补充和检查单元测试（先注释提交，或引擎分支合并到主干后出fs引擎再提交）</p>
+<p><strong>检查模型相关</strong></p>
+<p>整理接下来的模型检查设计和修改方案</p>
+<p>To do List</p>
+<ul>
+<li><input disabled type="checkbox"> 拆分msh和skn的检查</li>
+<li><input disabled type="checkbox"> 导出接口</li>
+<li><input disabled type="checkbox"> </li>
+</ul>
+<p>问题记录：</p>
+<p>是否需要加宏</p>
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><p>优化内存</p>
+<p>优化性能</p>
+<h1 id="1114"><a href="#1114" class="headerlink" title="1114"></a>1114</h1><ul>
+<li><input checked disabled type="checkbox"> 提交资源检查工具相关代码</li>
+<li><input checked disabled type="checkbox"> 自定义特效忽略比例测试</li>
+<li><input disabled type="checkbox"> 写新烘焙小作文</li>
+<li><input checked disabled type="checkbox"> 自动化测试结果处理</li>
+<li><input checked disabled type="checkbox"> 单独检查特效的工具</li>
+</ul>
+<h2 id="检查文件夹特效工具"><a href="#检查文件夹特效工具" class="headerlink" title="检查文件夹特效工具"></a>检查文件夹特效工具</h2><ol>
+<li>检查一个文件夹下的所有特效资源</li>
+<li>检查目标路径下多个文件夹的资源，调用检查一个的接口</li>
+</ol>
+<p><strong>检查项</strong></p>
+<p>文件检查项</p>
+<ol>
+<li>不应有缺失文件</li>
+<li>不同路径下的文件也不要重名</li>
+</ol>
+<p>特效检查项</p>
+<h1 id="1115"><a href="#1115" class="headerlink" title="1115"></a>1115</h1><ul>
+<li><input checked disabled type="checkbox"> 昨天打包特效报错的问题</li>
+<li><input checked disabled type="checkbox"> 导出新的资源检查工具和自定义特效转换工具</li>
+<li><input checked disabled type="checkbox"> 给飞哥的特效检查工具</li>
+<li><input checked disabled type="checkbox"> 看昨天的自动化测试结果</li>
+<li><input disabled type="checkbox"> 自定义特效转换工具打包使用的说明和提交</li>
+</ul>
+<p>验证：</p>
+<p>Jenkins断掉后，已启动的exe运行内容是否结束</p>
+<h1 id="1116"><a href="#1116" class="headerlink" title="1116"></a>1116</h1><ul>
+<li><input checked disabled type="checkbox"> needed出个包</li>
+<li><input disabled type="checkbox"> 验证没有问题</li>
+<li><input checked disabled type="checkbox"> 记录WT如何使用自定义特效转换工具(标注注意事项)</li>
+<li><input disabled type="checkbox"> 小作文</li>
+</ul>
+<h2 id="自定义特效工具使用说明"><a href="#自定义特效工具使用说明" class="headerlink" title="自定义特效工具使用说明"></a>自定义特效工具使用说明</h2><p><strong>获取工具</strong></p>
+<p>可以通过以下两种方式获取工具：</p>
+<ol>
+<li><p>从fancy-module导出<code>Tool_ConvertUserDefinedPfx</code>模块</p>
+<p>导出该模块后，需要添加<strong>引擎、modulecommon.lua、code.lua</strong></p>
+<p>其中code.lua：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">_dofile(<span class="string">'modulecommon.lua'</span>)</span><br><span class="line"><span class="keyword">local</span> cvtpfx = _require(<span class="string">'Tool_ConvertUserDefinedPfx'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> respath = <span class="string">[[D:\tmp]]</span></span><br><span class="line">cvtpfx:convertPfxToNormal(respath) <span class="comment">-- 转换成普通特效用这个</span></span><br><span class="line"><span class="comment">-- cvtpfx:convertPfxReduceCode(respath) -- 缩短自定义代码用这个</span></span><br><span class="line"></span><br><span class="line">_abort()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>16.15地址：</p>
+<p><code>\\10.1.16.15\temp\liujuanjuan\tmp\自定义特效转换工具\Tool-ConvertUserDefinedPfx.zip</code></p>
+</li>
+</ol>
+<h3 id="一、自定义特效转换成普通特效"><a href="#一、自定义特效转换成普通特效" class="headerlink" title="一、自定义特效转换成普通特效"></a>一、自定义特效转换成普通特效</h3><ul>
+<li><p>目标对象：项目美术和程序</p>
+</li>
+<li><p>功能：将部分自定义特效转换为普通特效，提升性能</p>
+</li>
+<li><p>工具：code.lua使用的接口为<strong>convertPfxToNormal</strong></p>
+</li>
+<li><p>使用：</p>
+<ul>
+<li>code.lua中修改需要转换特效的路径</li>
+<li>点击exe</li>
+<li>查看转换特效</li>
+</ul>
+</li>
+<li><p>注意事项</p>
+<p>工具会修改指定路径下的资源，如需保存原资源，请在转换前备份</p>
+</li>
+</ul>
+<h3 id="二、自定义特效转换自定义代码"><a href="#二、自定义特效转换自定义代码" class="headerlink" title="二、自定义特效转换自定义代码"></a>二、自定义特效转换自定义代码</h3><ul>
+<li><p>目标对象：QA</p>
+</li>
+<li><p>功能：缩短特效保存的信息，降低内存开销</p>
+</li>
+<li><p>工具：code.lua使用的接口为<strong>convertPfxReduceCode</strong></p>
+</li>
+<li><p>使用：</p>
+<ol>
+<li>转换特效<ul>
+<li>code.lua中修改特效所在路径</li>
+<li>点击exe</li>
+</ul>
+</li>
+<li>项目代码处理<ul>
+<li>在code文件夹下加userdefined.lua（路径：<code>Tool_ConvertUserDefinedPfx\ConvertEmitter_ReduceUDCode\code\userdefined.lua</code>）</li>
+<li>在code/list.lua中加_dofile(‘userdefined.lua’)</li>
+</ul>
+</li>
+<li>打包工具处理<ul>
+<li>code文件夹下加userdefined.lua</li>
+<li>在code/build.lua中加_dofile(‘userdefined.lua’)</li>
+<li>将userdefined.lua加到<strong>needed分组</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>注意事项：</p>
+<ol>
+<li><p>检查打包工具是否添加了userdefined.lua（否则打包过程会发生崩溃）</p>
+</li>
+<li><p>将userdefined.lua加到needed分组（手包加载自定义特效报错）</p>
+</li>
+<li><p>转换之后<strong>无法使用编辑器编辑</strong></p>
+</li>
+</ol>
+</li>
+</ul>
+<p>问题记录：</p>
+<p>对于已经转换过的特效检查后不再转换</p>
+<p>检查pfx</p>
+<p><img src="C:%5CUsers%5Cadmin%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1573890051641.png" alt="1573890051641"></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/记录/" rel="tag"># 记录</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/11/07/20190805记录/" rel="next" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/11/14/lightmass/" rel="prev" title="lightmass">
+                  lightmass <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#资源检查工具任务安排"><span class="nav-number">1.</span> <span class="nav-text">资源检查工具任务安排</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型相关"><span class="nav-number">1.1.</span> <span class="nav-text">模型相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">1.2.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1111"><span class="nav-number">2.</span> <span class="nav-text">1111</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特效转换成普通特效，带法线的不转换"><span class="nav-number">2.1.</span> <span class="nav-text">特效转换成普通特效，带法线的不转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缩减特效自定义代码"><span class="nav-number">2.2.</span> <span class="nav-text">缩减特效自定义代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1112"><span class="nav-number">3.</span> <span class="nav-text">1112</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1113"><span class="nav-number">4.</span> <span class="nav-text">1113</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义特效转换工具"><span class="nav-number">4.1.</span> <span class="nav-text">自定义特效转换工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源检查工具"><span class="nav-number">4.2.</span> <span class="nav-text">资源检查工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型相关改进"><span class="nav-number">4.2.1.</span> <span class="nav-text">模型相关改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源检查工具-1"><span class="nav-number">4.3.</span> <span class="nav-text">资源检查工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他-1"><span class="nav-number">4.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1114"><span class="nav-number">5.</span> <span class="nav-text">1114</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查文件夹特效工具"><span class="nav-number">5.1.</span> <span class="nav-text">检查文件夹特效工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1115"><span class="nav-number">6.</span> <span class="nav-text">1115</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1116"><span class="nav-number">7.</span> <span class="nav-text">1116</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义特效工具使用说明"><span class="nav-number">7.1.</span> <span class="nav-text">自定义特效工具使用说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、自定义特效转换成普通特效"><span class="nav-number">7.1.1.</span> <span class="nav-text">一、自定义特效转换成普通特效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、自定义特效转换自定义代码"><span class="nav-number">7.1.2.</span> <span class="nav-text">二、自定义特效转换自定义代码</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/touxiang.jpg"
+      alt="木可">
+  <p class="site-author-name" itemprop="name">木可</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/plainliu" title="GitHub &rarr; https://github.com/plainliu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木可</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
