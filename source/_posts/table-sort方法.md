@@ -1,9 +1,10 @@
 ---
 title: lua table.sort方法
 date: 2019-09-03 21:15:43
-categories: Lua
+categories:
+- Programming
 tags:
-- 笔记
+- Lua
 ---
 
 # 问题背景

@@ -1,7 +1,11 @@
 ---
 title: lightmass
 date: 2019-11-14 15:14:01
-tags: -文
+categories:
+- Programming
+- CG
+tags:
+- Lightmass
 ---
 
 

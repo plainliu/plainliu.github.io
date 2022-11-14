@@ -1,14 +1,40 @@
 ---
 title: Hexo + Github 搭建博客
 date: 2019-08-25 23:19:21
+categories:
+- Tools
 tags: 
-- 工具
-- 记录
+- Hexo
 ---
 
 # Hexo
 
 一种静态博客框架
+
+常用命令
+
+```shell
+hexo new <title>
+
+# hexo generate
+hexo s # hexo server
+
+hexo deploy
+```
+
+分类和标签
+
+```
+categories:
+- [Diary, PlayStation]
+- [Diary, Games]
+- [Life]
+tags:
+- PS3
+- Games
+```
+
+
 
 ## 安装和使用
 
@@ -183,3 +209,14 @@ git中可以直接加如子项目
 ![](/img/images/1566725941936.png)
 
 ![](/img/images/1566725971896.png)
+
+# 阿里云图床+PicGo
+
+与这个博客操作类似，不再详细写
+
+https://www.cnblogs.com/Kylin-lawliet/p/16446536.html
+
+注意：
+
+- Typora中用PicGo app上传
+- PicGo app中设置时间戳命名，经过测试，同名不同内容的文件不会再次上传，直接返回已有url
